@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 3 Parameters, Priors and Posteriors | A Minimal Book Example</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+set in the _output.yml file.
+The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 3 Parameters, Priors and Posteriors | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+set in the _output.yml file.
+The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 3 Parameters, Priors and Posteriors | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+set in the _output.yml file.
+The HTML output format for this example is bookdown::gitbook,</p>" />
+  
+
+<meta name="author" content="John Doe" />
+
+
+<meta name="date" content="2025-03-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-bayesian-thinking.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html"><i class="fa fa-check"></i><b>2</b> Introduction to Bayesian Thinking</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#the-core-concept-bayesian-vs-frequentist"><i class="fa fa-check"></i><b>2.2</b> The Core Concept: Bayesian vs frequentist</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#motivating-examples"><i class="fa fa-check"></i><b>2.2.1</b> Motivating Examples</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#likelihood-function"><i class="fa fa-check"></i><b>2.2.2</b> Likelihood function</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#prior-distributions-ptheta"><i class="fa fa-check"></i><b>2.2.3</b> Prior distributions: <span class="math inline">\(p(\theta)\)</span></a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#posterior-distributions"><i class="fa fa-check"></i><b>2.2.4</b> Posterior distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#applications-of-bayesian-thinking"><i class="fa fa-check"></i><b>2.3</b> Applications of Bayesian Thinking</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#challenges"><i class="fa fa-check"></i><b>2.4</b> Challenges</a></li>
+<li class="chapter" data-level="" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html"><i class="fa fa-check"></i><b>3</b> Parameters, Priors and Posteriors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#parameters"><i class="fa fa-check"></i><b>3.2</b> Parameter(s)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#identifying-parameters-in-a-distribution"><i class="fa fa-check"></i><b>3.2.1</b> Identifying parameters in a distribution</a></li>
+<li class="chapter" data-level="3.2.2" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#why-this-matters-in-bayesian-analysis"><i class="fa fa-check"></i><b>3.2.2</b> Why this matters in Bayesian analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#priors"><i class="fa fa-check"></i><b>3.3</b> Priors</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#uniform-or-discrete-prior"><i class="fa fa-check"></i><b>3.3.1</b> Uniform or Discrete Prior</a></li>
+<li class="chapter" data-level="3.3.2" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#normal-or-gaussian-prior"><i class="fa fa-check"></i><b>3.3.2</b> Normal or Gaussian Prior</a></li>
+<li class="chapter" data-level="3.3.3" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#beta-prior"><i class="fa fa-check"></i><b>3.3.3</b> Beta Prior</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#posterior-distributions-1"><i class="fa fa-check"></i><b>3.4</b> Posterior distributions</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="parameters-priors-and-posteriors" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Parameters, Priors and Posteriors<a href="parameters-priors-and-posteriors.html#parameters-priors-and-posteriors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction-1" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Introduction<a href="parameters-priors-and-posteriors.html#introduction-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The basic difference of Bayesian thinking from the frequentist approach is that the parameter is considered as random process with a distribution function. This distribution is then reflect the degree of our belief about the parameter before data is observed. <strong>Prior distribution</strong> satisfies the regularity condition of a probability distribution, non-negativity (because probability can not be negative), summed or integrated to 1 (certainty) and defined. Priors satisfying these conditions are referred <strong>“Proper”</strong> prior, otherwise <strong>“improper”</strong> prior. In this section different types of prior distribution is explored, how to graphically display and combine with likelihood to derive the posterior distribution. Objective priors are intended to be neutral and based on formal criteria, while subjective priors are more personalized and can incorporate individual expertise or prior knowledge.</p>
+</div>
+<div id="parameters" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Parameter(s)<a href="parameters-priors-and-posteriors.html#parameters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A parameter is measure or characteristic that can describe or classify a particular system such as event, object, or population data. Any model expressed in terms of parameters is a parametric models. In the simple linear regression model <span class="math inline">\(y=\alpha + \beta * x + \epsilon\)</span>; <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\sigma^2_\epsilon=var(\epsilon)\)</span> are considered as parameters and unknown.</p>
+<div id="identifying-parameters-in-a-distribution" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Identifying parameters in a distribution<a href="parameters-priors-and-posteriors.html#identifying-parameters-in-a-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In the context of probability distributions, a <strong>parameter</strong> is a numerical characteristic that defines the shape, location, or scale of a distribution. For the <strong>normal distribution</strong>, the two key parameters are:</p>
+<ul>
+<li><p><strong>Mean</strong> (<span class="math inline">\(\mu\)</span>) – Determines the of the distribution. Changing the mean shifts the distribution without affecting its shape.</p></li>
+<li><p><strong>Variance</strong> (<span class="math inline">\(\sigma^2\)</span>) – Controls the of the distribution. A larger variance results in a wider, flatter distribution, while a smaller variance makes the distribution more peaked and concentrated around the mean.</p></li>
+</ul>
+<p><strong>Activity 2.1:</strong> Simulate a normal data with unknown mean and known variance, i.e., <span class="math inline">\((\mu, \sigma^2)\)</span>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="parameters-priors-and-posteriors.html#cb12-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># For reproducibility</span></span>
+<span id="cb12-2"><a href="parameters-priors-and-posteriors.html#cb12-2" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="sc">-</span><span class="dv">20</span>, <span class="at">to =</span> <span class="dv">20</span>,<span class="at">length.out =</span> <span class="dv">500</span>)</span>
+<span id="cb12-3"><a href="parameters-priors-and-posteriors.html#cb12-3" tabindex="-1"></a>norm_dat <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-4"><a href="parameters-priors-and-posteriors.html#cb12-4" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rep</span>(x_vals, <span class="dv">3</span>),</span>
+<span id="cb12-5"><a href="parameters-priors-and-posteriors.html#cb12-5" tabindex="-1"></a>  <span class="at">pdf =</span> <span class="fu">c</span>(<span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb12-6"><a href="parameters-priors-and-posteriors.html#cb12-6" tabindex="-1"></a>          <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb12-7"><a href="parameters-priors-and-posteriors.html#cb12-7" tabindex="-1"></a>          <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">2</span>)),</span>
+<span id="cb12-8"><a href="parameters-priors-and-posteriors.html#cb12-8" tabindex="-1"></a>  <span class="at">dist =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;N(0,4)&quot;</span>, <span class="st">&quot;N(5,4)&quot;</span>, <span class="st">&quot;N(10,4)&quot;</span>), <span class="at">each =</span> <span class="fu">length</span>(x_vals))</span>
+<span id="cb12-9"><a href="parameters-priors-and-posteriors.html#cb12-9" tabindex="-1"></a>)</span>
+<span id="cb12-10"><a href="parameters-priors-and-posteriors.html#cb12-10" tabindex="-1"></a><span class="fu">head</span>(norm_dat)</span></code></pre></div>
+<pre><code>##           x          pdf   dist
+## 1 -20.00000 3.847299e-23 N(0,4)
+## 2 -19.91984 5.739487e-23 N(0,4)
+## 3 -19.83968 8.548551e-23 N(0,4)
+## 4 -19.75952 1.271201e-22 N(0,4)
+## 5 -19.67936 1.887289e-22 N(0,4)
+## 6 -19.59920 2.797466e-22 N(0,4)</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="parameters-priors-and-posteriors.html#cb14-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb14-2"><a href="parameters-priors-and-posteriors.html#cb14-2" tabindex="-1"></a><span class="fu">ggplot</span>(norm_dat) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="parameters-priors-and-posteriors.html#cb14-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> pdf, <span class="at">color =</span> dist, <span class="at">group =</span> dist), <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb14-4"><a href="parameters-priors-and-posteriors.html#cb14-4" tabindex="-1"></a>   <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">20</span>)) <span class="sc">+</span> </span>
+<span id="cb14-5"><a href="parameters-priors-and-posteriors.html#cb14-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Distribution of varied mean, constant variance&quot;</span>,</span>
+<span id="cb14-6"><a href="parameters-priors-and-posteriors.html#cb14-6" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb14-7"><a href="parameters-priors-and-posteriors.html#cb14-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>,</span>
+<span id="cb14-8"><a href="parameters-priors-and-posteriors.html#cb14-8" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Simulated Data&quot;</span>) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="parameters-priors-and-posteriors.html#cb14-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb14-10"><a href="parameters-priors-and-posteriors.html#cb14-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.85</span>, <span class="fl">0.8</span>)) </span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig1"></span>
+<img src="_main_files/figure-html/fig1-1.png" alt="Likelihood function for normal  distribution with random mean" width="576" />
+<p class="caption">
+Figure 3.1: Likelihood function for normal distribution with random mean
+</p>
+</div>
+<p>The density plot in Figure <a href="parameters-priors-and-posteriors.html#fig:fig1">3.1</a> illustrates the density functions of three simulated normal data with the same variance but different means. All three distributions have the same shape because they share the same variability (<span class="math inline">\(\sigma^2=4\)</span>).</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="parameters-priors-and-posteriors.html#cb15-1" tabindex="-1"></a><span class="co"># Generate data</span></span>
+<span id="cb15-2"><a href="parameters-priors-and-posteriors.html#cb15-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># For reproducibility</span></span>
+<span id="cb15-3"><a href="parameters-priors-and-posteriors.html#cb15-3" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">15</span>, <span class="at">length.out =</span> <span class="dv">300</span>)  <span class="co"># Common x-range</span></span>
+<span id="cb15-4"><a href="parameters-priors-and-posteriors.html#cb15-4" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="parameters-priors-and-posteriors.html#cb15-5" tabindex="-1"></a>norm_dat_var <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb15-6"><a href="parameters-priors-and-posteriors.html#cb15-6" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rep</span>(x_vals, <span class="dv">3</span>),</span>
+<span id="cb15-7"><a href="parameters-priors-and-posteriors.html#cb15-7" tabindex="-1"></a>  <span class="at">pdf =</span> <span class="fu">c</span>(<span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">1</span>),</span>
+<span id="cb15-8"><a href="parameters-priors-and-posteriors.html#cb15-8" tabindex="-1"></a>          <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb15-9"><a href="parameters-priors-and-posteriors.html#cb15-9" tabindex="-1"></a>          <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">3</span>)),</span>
+<span id="cb15-10"><a href="parameters-priors-and-posteriors.html#cb15-10" tabindex="-1"></a>  <span class="at">dist =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;N(5,1)&quot;</span>, <span class="st">&quot;N(5,4)&quot;</span>, <span class="st">&quot;N(5,9)&quot;</span>), <span class="at">each =</span> <span class="fu">length</span>(x_vals))</span>
+<span id="cb15-11"><a href="parameters-priors-and-posteriors.html#cb15-11" tabindex="-1"></a>)</span>
+<span id="cb15-12"><a href="parameters-priors-and-posteriors.html#cb15-12" tabindex="-1"></a><span class="fu">head</span>(norm_dat_var)</span></code></pre></div>
+<pre><code>##           x          pdf   dist
+## 1 -5.000000 7.694599e-23 N(5,1)
+## 2 -4.933110 1.498692e-22 N(5,1)
+## 3 -4.866221 2.906000e-22 N(5,1)
+## 4 -4.799331 5.609651e-22 N(5,1)
+## 5 -4.732441 1.078035e-21 N(5,1)
+## 6 -4.665552 2.062466e-21 N(5,1)</code></pre>
+<p>Plot the density functions</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="parameters-priors-and-posteriors.html#cb17-1" tabindex="-1"></a><span class="fu">ggplot</span>(norm_dat_var, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> pdf, <span class="at">color =</span> dist, <span class="at">group =</span> dist)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="parameters-priors-and-posteriors.html#cb17-2" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="parameters-priors-and-posteriors.html#cb17-3" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">15</span>)) <span class="sc">+</span>  </span>
+<span id="cb17-4"><a href="parameters-priors-and-posteriors.html#cb17-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Effect of Variance on Normal Distributions&quot;</span>,</span>
+<span id="cb17-5"><a href="parameters-priors-and-posteriors.html#cb17-5" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;x&quot;</span>,</span>
+<span id="cb17-6"><a href="parameters-priors-and-posteriors.html#cb17-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>,</span>
+<span id="cb17-7"><a href="parameters-priors-and-posteriors.html#cb17-7" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Simulated Data&quot;</span>) <span class="sc">+</span>  </span>
+<span id="cb17-8"><a href="parameters-priors-and-posteriors.html#cb17-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb17-9"><a href="parameters-priors-and-posteriors.html#cb17-9" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.8</span>))  </span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig2"></span>
+<img src="_main_files/figure-html/fig2-1.png" alt="Likelihood function for normal  distribution with random variance" width="576" />
+<p class="caption">
+Figure 3.2: Likelihood function for normal distribution with random variance
+</p>
+</div>
+<p>Similarly, the plot in figure <a href="parameters-priors-and-posteriors.html#fig:fig2">3.2</a> illustrates the density function of normal data with varying variance but same mean. We can easily observe that as variance increases, the density curve flattens because probability mass is spread out over a larger range. The highest peak corresponds to the smallest variance because values are more concentrated near the mean. As variance increases, the distribution becomes wider and flatter.</p>
+<p><strong>Key insights</strong></p>
+<p>When we kept <strong>variance</strong> constant and changed the <strong>mean</strong>, the distribution shifted along the x-axis but retained its shape. When we kept <strong>mean</strong> constant and changed the <strong>variance</strong>, the shape of the distribution changed, higher variance made the distribution more spread out, while lower variance made it more concentrated. This information proves that mean and variance are the two parameters describing the location and shape of a normal distribution.</p>
+<p>Additionally, consider a random variable <span class="math inline">\(y\)</span> follows binomial distribution with parameter <span class="math inline">\(\theta\)</span>, i.e., <span class="math inline">\(y|\theta, n \sim Bin(n, \theta)\)</span>, where <span class="math inline">\(n\)</span> represent the number of independent trials performed, and <span class="math inline">\(\theta\)</span> represent the probability of getting success. The probability function of <span class="math inline">\(y\)</span> is given by
+<span class="math display">\[
+P(y= y|\theta, n) = \binom{n}{y} \theta^y (1 - \theta)^{n - y}.
+\]</span>
+Here <span class="math inline">\(\theta\)</span> play the role of a parameter and different value result different likelihood value.</p>
+<p><strong>Activity 2.2:</strong> Simulate binomial data with <span class="math inline">\(n=30\)</span> and plot the density function of <span class="math inline">\(y\)</span> for three different values of <span class="math inline">\(\theta\)</span>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="parameters-priors-and-posteriors.html#cb18-1" tabindex="-1"></a><span class="co"># Parameters</span></span>
+<span id="cb18-2"><a href="parameters-priors-and-posteriors.html#cb18-2" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb18-3"><a href="parameters-priors-and-posteriors.html#cb18-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb18-4"><a href="parameters-priors-and-posteriors.html#cb18-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>n</span>
+<span id="cb18-5"><a href="parameters-priors-and-posteriors.html#cb18-5" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.10</span>, <span class="fl">0.50</span>, <span class="fl">0.90</span>)</span>
+<span id="cb18-6"><a href="parameters-priors-and-posteriors.html#cb18-6" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb18-7"><a href="parameters-priors-and-posteriors.html#cb18-7" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="parameters-priors-and-posteriors.html#cb18-8" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb18-9"><a href="parameters-priors-and-posteriors.html#cb18-9" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">y =</span> y, <span class="at">theta =</span> theta) <span class="sc">%&gt;%</span></span>
+<span id="cb18-10"><a href="parameters-priors-and-posteriors.html#cb18-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">dbinom</span>(y, <span class="at">size =</span> n, <span class="at">prob =</span> theta),</span>
+<span id="cb18-11"><a href="parameters-priors-and-posteriors.html#cb18-11" tabindex="-1"></a>         <span class="at">group =</span> <span class="fu">factor</span>(theta, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Bin(30, 0.10)&quot;</span>, <span class="st">&quot;Bin(30, 0.50)&quot;</span>, <span class="st">&quot;Bin(30, 0.90)&quot;</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="parameters-priors-and-posteriors.html#cb19-1" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb19-2"><a href="parameters-priors-and-posteriors.html#cb19-2" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> y, <span class="at">y =</span> prob, <span class="at">color =</span> group)) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="parameters-priors-and-posteriors.html#cb19-3" tabindex="-1"></a>  <span class="co">#geom_point() +</span></span>
+<span id="cb19-4"><a href="parameters-priors-and-posteriors.html#cb19-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a href="parameters-priors-and-posteriors.html#cb19-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;P(Y=y)&quot;</span>, <span class="at">color =</span> <span class="st">&quot;Distribution&quot;</span>) <span class="sc">+</span></span>
+<span id="cb19-6"><a href="parameters-priors-and-posteriors.html#cb19-6" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> colors) <span class="sc">+</span></span>
+<span id="cb19-7"><a href="parameters-priors-and-posteriors.html#cb19-7" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">35</span>)) <span class="sc">+</span>  </span>
+<span id="cb19-8"><a href="parameters-priors-and-posteriors.html#cb19-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">expression</span>(<span class="st">&quot;Effect of &quot;</span> <span class="sc">*</span> theta <span class="sc">*</span> <span class="st">&quot; on binomial distributions&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="parameters-priors-and-posteriors.html#cb19-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig3"></span>
+<img src="_main_files/figure-html/fig3-1.png" alt="Binomial distribution with different $\theta$." width="576" />
+<p class="caption">
+Figure 3.3: Binomial distribution with different <span class="math inline">\(\theta\)</span>.
+</p>
+</div>
+<p><strong>Activity 2.3:</strong> Simulate binomial data with <span class="math inline">\(n=30\)</span> and <span class="math inline">\(y=7\)</span>, and plot the likelihood function of <span class="math inline">\(y\)</span> when for different value of <span class="math inline">\(\theta\)</span>.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="parameters-priors-and-posteriors.html#cb20-1" tabindex="-1"></a><span class="co"># Simulaiton setting</span></span>
+<span id="cb20-2"><a href="parameters-priors-and-posteriors.html#cb20-2" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">30</span>    <span class="co"># Number of trials</span></span>
+<span id="cb20-3"><a href="parameters-priors-and-posteriors.html#cb20-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">7</span>     <span class="co"># Number of successes</span></span>
+<span id="cb20-4"><a href="parameters-priors-and-posteriors.html#cb20-4" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="parameters-priors-and-posteriors.html#cb20-5" tabindex="-1"></a><span class="co"># Likelihood function for Binomial distribution</span></span>
+<span id="cb20-6"><a href="parameters-priors-and-posteriors.html#cb20-6" tabindex="-1"></a>likeld_func <span class="ot">&lt;-</span> <span class="cf">function</span>(theta, n, y) {</span>
+<span id="cb20-7"><a href="parameters-priors-and-posteriors.html#cb20-7" tabindex="-1"></a>  <span class="fu">choose</span>(n, y) <span class="sc">*</span> (theta<span class="sc">^</span>y) <span class="sc">*</span> ((<span class="dv">1</span> <span class="sc">-</span> theta)<span class="sc">^</span>(n <span class="sc">-</span> y))</span>
+<span id="cb20-8"><a href="parameters-priors-and-posteriors.html#cb20-8" tabindex="-1"></a>}</span>
+<span id="cb20-9"><a href="parameters-priors-and-posteriors.html#cb20-9" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="parameters-priors-and-posteriors.html#cb20-10" tabindex="-1"></a><span class="co"># Possible Values of theta ranges from 0 to 1</span></span>
+<span id="cb20-11"><a href="parameters-priors-and-posteriors.html#cb20-11" tabindex="-1"></a>theta_values <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb20-12"><a href="parameters-priors-and-posteriors.html#cb20-12" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="parameters-priors-and-posteriors.html#cb20-13" tabindex="-1"></a><span class="co"># Use he sapply function to compute the likelihood function for each value of theta and </span></span>
+<span id="cb20-14"><a href="parameters-priors-and-posteriors.html#cb20-14" tabindex="-1"></a><span class="co">#store the result likelihood_values</span></span>
+<span id="cb20-15"><a href="parameters-priors-and-posteriors.html#cb20-15" tabindex="-1"></a>likeld_values <span class="ot">&lt;-</span> <span class="fu">sapply</span>(theta_values, </span>
+<span id="cb20-16"><a href="parameters-priors-and-posteriors.html#cb20-16" tabindex="-1"></a>                            likeld_func, </span>
+<span id="cb20-17"><a href="parameters-priors-and-posteriors.html#cb20-17" tabindex="-1"></a>                            <span class="at">n =</span> n, </span>
+<span id="cb20-18"><a href="parameters-priors-and-posteriors.html#cb20-18" tabindex="-1"></a>                            <span class="at">y =</span> y)</span>
+<span id="cb20-19"><a href="parameters-priors-and-posteriors.html#cb20-19" tabindex="-1"></a><span class="co">#Create a dataframe</span></span>
+<span id="cb20-20"><a href="parameters-priors-and-posteriors.html#cb20-20" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Theta =</span> theta_values, </span>
+<span id="cb20-21"><a href="parameters-priors-and-posteriors.html#cb20-21" tabindex="-1"></a>                 <span class="at">Likelihood =</span> likeld_values)</span>
+<span id="cb20-22"><a href="parameters-priors-and-posteriors.html#cb20-22" tabindex="-1"></a><span class="co">#Print the first 5 rows of the datarame. </span></span>
+<span id="cb20-23"><a href="parameters-priors-and-posteriors.html#cb20-23" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<pre><code>##        Theta   Likelihood
+## 1 0.00000000 0.000000e+00
+## 2 0.01010101 1.729335e-08
+## 3 0.02020202 1.748393e-06
+## 4 0.03030303 2.353783e-05
+## 5 0.04040404 1.385933e-04
+## 6 0.05050505 5.180956e-04</code></pre>
+<p>The likelihood function is produced as follows:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="parameters-priors-and-posteriors.html#cb22-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb22-2"><a href="parameters-priors-and-posteriors.html#cb22-2" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb22-3"><a href="parameters-priors-and-posteriors.html#cb22-3" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="parameters-priors-and-posteriors.html#cb22-4" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> Theta, <span class="at">y =</span> Likelihood)) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="parameters-priors-and-posteriors.html#cb22-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="parameters-priors-and-posteriors.html#cb22-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(theta[c]), </span>
+<span id="cb22-7"><a href="parameters-priors-and-posteriors.html#cb22-7" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(<span class="st">&quot;Likelihood function for Binom(n=18, y=7, &quot;</span> <span class="sc">*</span> theta[c] <span class="sc">*</span> <span class="st">&quot;)&quot;</span>),  </span>
+<span id="cb22-8"><a href="parameters-priors-and-posteriors.html#cb22-8" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb22-9"><a href="parameters-priors-and-posteriors.html#cb22-9" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb22-10"><a href="parameters-priors-and-posteriors.html#cb22-10" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="parameters-priors-and-posteriors.html#cb22-11" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>), <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">14</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig4"></span>
+<img src="_main_files/figure-html/fig4-1.png" alt="Likelihood function for the binomial distribution with n=30 and y=7" width="576" />
+<p class="caption">
+Figure 3.4: Likelihood function for the binomial distribution with n=30 and y=7
+</p>
+</div>
+<p>Figure <a href="parameters-priors-and-posteriors.html#fig:fig4">3.4</a> show the likelihood distribution of the observed data depends on its parameter <span class="math inline">\(\theta\)</span>.</p>
+<p><strong>Activity 2.4: Emergency Calls </strong>
+Suppose that a hospital receives emergency calls at an average of 10 calls per hour during a given day. If we assume that the calls arrive independently (meaning previous calls do not influence future calls), the number of calls follows a poisson process with a rate of <span class="math inline">\(\lambda\)</span> (calls/hour). Based on this information, simulate 1000 hours of emergency calls with <span class="math inline">\(\lambda=10\)</span> and analyze the number of calls received per hour.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="parameters-priors-and-posteriors.html#cb23-1" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
+<span id="cb23-2"><a href="parameters-priors-and-posteriors.html#cb23-2" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb23-3"><a href="parameters-priors-and-posteriors.html#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="parameters-priors-and-posteriors.html#cb23-4" tabindex="-1"></a><span class="co"># Define parameters</span></span>
+<span id="cb23-5"><a href="parameters-priors-and-posteriors.html#cb23-5" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> <span class="dv">10</span>   </span>
+<span id="cb23-6"><a href="parameters-priors-and-posteriors.html#cb23-6" tabindex="-1"></a>n_hours <span class="ot">&lt;-</span> <span class="dv">1000</span> </span>
+<span id="cb23-7"><a href="parameters-priors-and-posteriors.html#cb23-7" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="parameters-priors-and-posteriors.html#cb23-8" tabindex="-1"></a><span class="co"># Simulate Poisson distributed call arrivals</span></span>
+<span id="cb23-9"><a href="parameters-priors-and-posteriors.html#cb23-9" tabindex="-1"></a>calls_per_hour <span class="ot">&lt;-</span> <span class="fu">rpois</span>(n_hours, lambda)</span>
+<span id="cb23-10"><a href="parameters-priors-and-posteriors.html#cb23-10" tabindex="-1"></a></span>
+<span id="cb23-11"><a href="parameters-priors-and-posteriors.html#cb23-11" tabindex="-1"></a><span class="co"># Compute Poisson PMF for comparison</span></span>
+<span id="cb23-12"><a href="parameters-priors-and-posteriors.html#cb23-12" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="fu">max</span>(calls_per_hour)</span>
+<span id="cb23-13"><a href="parameters-priors-and-posteriors.html#cb23-13" tabindex="-1"></a>poisson_probs <span class="ot">&lt;-</span> <span class="fu">dpois</span>(x_vals, lambda)</span>
+<span id="cb23-14"><a href="parameters-priors-and-posteriors.html#cb23-14" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="parameters-priors-and-posteriors.html#cb23-15" tabindex="-1"></a><span class="co"># Create data frame for plotting</span></span>
+<span id="cb23-16"><a href="parameters-priors-and-posteriors.html#cb23-16" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Calls=</span>x_vals, <span class="at">Prob=</span>poisson_probs)</span>
+<span id="cb23-17"><a href="parameters-priors-and-posteriors.html#cb23-17" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<pre><code>##   Calls         Prob
+## 1     0 4.539993e-05
+## 2     1 4.539993e-04
+## 3     2 2.269996e-03
+## 4     3 7.566655e-03
+## 5     4 1.891664e-02
+## 6     5 3.783327e-02</code></pre>
+<p>Plot the histogram of simulated data</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="parameters-priors-and-posteriors.html#cb25-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(calls_per_hour), </span>
+<span id="cb25-2"><a href="parameters-priors-and-posteriors.html#cb25-2" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> calls_per_hour)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="parameters-priors-and-posteriors.html#cb25-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), </span>
+<span id="cb25-4"><a href="parameters-priors-and-posteriors.html#cb25-4" tabindex="-1"></a>                 <span class="at">bins =</span> <span class="dv">20</span>, </span>
+<span id="cb25-5"><a href="parameters-priors-and-posteriors.html#cb25-5" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">&quot;skyblue&quot;</span>, </span>
+<span id="cb25-6"><a href="parameters-priors-and-posteriors.html#cb25-6" tabindex="-1"></a>                 <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb25-7"><a href="parameters-priors-and-posteriors.html#cb25-7" tabindex="-1"></a>                 <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="parameters-priors-and-posteriors.html#cb25-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> df, </span>
+<span id="cb25-9"><a href="parameters-priors-and-posteriors.html#cb25-9" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">x =</span> Calls, <span class="at">y =</span> Prob), </span>
+<span id="cb25-10"><a href="parameters-priors-and-posteriors.html#cb25-10" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb25-11"><a href="parameters-priors-and-posteriors.html#cb25-11" tabindex="-1"></a>            <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb25-12"><a href="parameters-priors-and-posteriors.html#cb25-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Poisson distribution of emergency calls per hour&quot;</span>,</span>
+<span id="cb25-13"><a href="parameters-priors-and-posteriors.html#cb25-13" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Number of calls per hour&quot;</span>, </span>
+<span id="cb25-14"><a href="parameters-priors-and-posteriors.html#cb25-14" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Probability&quot;</span>) <span class="sc">+</span></span>
+<span id="cb25-15"><a href="parameters-priors-and-posteriors.html#cb25-15" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig5"></span>
+<img src="_main_files/figure-html/fig5-1.png" alt="Plot the empirical vs theoretical poisson distribution of emergency calls per hour" width="576" />
+<p class="caption">
+Figure 3.5: Plot the empirical vs theoretical poisson distribution of emergency calls per hour
+</p>
+</div>
+<p>The histogram closely matches the expected Poisson distribution, validating our assumption that the number of emergency calls per hour follows a Poisson process. This indicates that the Poisson model is appropriate for describing the arrival pattern of emergency calls.</p>
+<p>The Likelihood function of a poisson distribution is
+<span class="math display">\[
+L(\lambda|y) = \prod^{n}_{i=1}\frac{e^{-\lambda}\lambda^{y_i}}{y_i!}
+\]</span>
+Direct simplification of the likelihood function, which is the product of the individual likelihood, is computationally inconvinient, we use the log-likelihood for better numerical stability:
+<span class="math display">\[
+log\, L(\lambda|y) = \sum^n_{i=1}\left[-\lambda + y_ilog\,\lambda-log\, y_i!\right].
+\]</span></p>
+<p>The following code computes and plot the likelihood function for different <span class="math inline">\(\lambda\)</span> Values.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="parameters-priors-and-posteriors.html#cb26-1" tabindex="-1"></a><span class="co"># Simulate possible lambda values from 5 to 15</span></span>
+<span id="cb26-2"><a href="parameters-priors-and-posteriors.html#cb26-2" tabindex="-1"></a>lambda_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">15</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb26-3"><a href="parameters-priors-and-posteriors.html#cb26-3" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="parameters-priors-and-posteriors.html#cb26-4" tabindex="-1"></a><span class="co">#Compute the likelihood function</span></span>
+<span id="cb26-5"><a href="parameters-priors-and-posteriors.html#cb26-5" tabindex="-1"></a>log_likelihoods <span class="ot">&lt;-</span> <span class="fu">sapply</span>(lambda_vals, <span class="cf">function</span>(l) <span class="fu">sum</span>(<span class="fu">dpois</span>(calls_per_hour, l, <span class="at">log =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb26-6"><a href="parameters-priors-and-posteriors.html#cb26-6" tabindex="-1"></a></span>
+<span id="cb26-7"><a href="parameters-priors-and-posteriors.html#cb26-7" tabindex="-1"></a><span class="co"># Normalize for better visualization</span></span>
+<span id="cb26-8"><a href="parameters-priors-and-posteriors.html#cb26-8" tabindex="-1"></a>log_likelihoods <span class="ot">&lt;-</span> log_likelihoods <span class="sc">-</span> <span class="fu">max</span>(log_likelihoods)</span>
+<span id="cb26-9"><a href="parameters-priors-and-posteriors.html#cb26-9" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="parameters-priors-and-posteriors.html#cb26-10" tabindex="-1"></a><span class="co"># Create data frame</span></span>
+<span id="cb26-11"><a href="parameters-priors-and-posteriors.html#cb26-11" tabindex="-1"></a>df_lik <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(lambda_vals, log_likelihoods)</span>
+<span id="cb26-12"><a href="parameters-priors-and-posteriors.html#cb26-12" tabindex="-1"></a><span class="fu">head</span>(df_lik)</span></code></pre></div>
+<pre><code>##   lambda_vals log_likelihoods
+## 1    5.000000       -1919.646
+## 2    5.101010       -1820.990
+## 3    5.202020       -1726.249
+## 4    5.303030       -1635.272
+## 5    5.404040       -1547.918
+## 6    5.505051       -1464.052</code></pre>
+<p>Plot log-likelihood function</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="parameters-priors-and-posteriors.html#cb28-1" tabindex="-1"></a><span class="fu">ggplot</span>(df_lik, <span class="fu">aes</span>(<span class="at">x =</span> lambda_vals, </span>
+<span id="cb28-2"><a href="parameters-priors-and-posteriors.html#cb28-2" tabindex="-1"></a>                   <span class="at">y =</span> log_likelihoods)) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="parameters-priors-and-posteriors.html#cb28-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-4"><a href="parameters-priors-and-posteriors.html#cb28-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(calls_per_hour), </span>
+<span id="cb28-5"><a href="parameters-priors-and-posteriors.html#cb28-5" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, </span>
+<span id="cb28-6"><a href="parameters-priors-and-posteriors.html#cb28-6" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;red&quot;</span>, </span>
+<span id="cb28-7"><a href="parameters-priors-and-posteriors.html#cb28-7" tabindex="-1"></a>             <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-8"><a href="parameters-priors-and-posteriors.html#cb28-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Log-Likelihood function for poisson process&quot;</span>,</span>
+<span id="cb28-9"><a href="parameters-priors-and-posteriors.html#cb28-9" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">expression</span>(<span class="st">&quot;Rate &quot;</span> <span class="sc">*</span> lambda <span class="sc">*</span> <span class="st">&quot;&quot;</span>), </span>
+<span id="cb28-10"><a href="parameters-priors-and-posteriors.html#cb28-10" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Log-likelihood&quot;</span>) <span class="sc">+</span></span>
+<span id="cb28-11"><a href="parameters-priors-and-posteriors.html#cb28-11" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig6"></span>
+<img src="_main_files/figure-html/fig6-1.png" alt="Plot of log-likelihood function of a poisson process" width="576" />
+<p class="caption">
+Figure 3.6: Plot of log-likelihood function of a poisson process
+</p>
+</div>
+<p>The log-likelihood function peaks near the observed sample mean (<span class="math inline">\(\sim 10\)</span>), which aligns with the MLE for the Poisson rate parameter <span class="math inline">\(\lambda\)</span>. In a Poisson process, the MLE for <span class="math inline">\(\lambda\)</span> is given by:
+<span class="math display">\[
+\hat{\lambda} = \frac{1}{n} \sum_{i=1}^{n} y_i = \text{mean}(y)
+\]</span>
+Since the peak of the log-likelihood function corresponds to this estimate, it confirms that the observed data supports <span class="math inline">\(\lambda \approx 10\)</span> as the most likely value for the true rate of emergency calls per hour.</p>
+</div>
+<div id="why-this-matters-in-bayesian-analysis" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Why this matters in Bayesian analysis<a href="parameters-priors-and-posteriors.html#why-this-matters-in-bayesian-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>Parameters are unknown in real-World problems: In Bayesian analysis, parameters like <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> for normal variate are not fixed but uncertain. We use <strong>probability distributions</strong> to express our beliefs about them.</p></li>
+<li><p>Priors reflect initial beliefs: Before seeing any data, we assign <strong>prior distributions</strong> to parameters to encode what we believe about them.</p></li>
+<li><p>Posteriors update our knowledge: After observing data, Bayesian methods update our beliefs, leading to a <strong>posterior distribution</strong> that reflects both prior information and new evidence.</p></li>
+<li><p>This exploration of parameters lays the foundation for understanding how <strong>priors</strong> (initial beliefs about parameters) evolve into <strong>posteriors</strong> (updated beliefs) in Bayesian inference.</p></li>
+</ul>
+</div>
+</div>
+<div id="priors" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Priors<a href="parameters-priors-and-posteriors.html#priors" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As discussed in chapter 1, section 1.2.3, prior distribution can be specified for parameters. A prior can be:</p>
+<ul>
+<li><p><strong>Non-Informative or Weakly informative Prior:</strong> Non-informative prior distribution is specified when there is no prior knowledge or information is available related to the parameter of interest. This prior is often vague, diffuse or flat relative to the likelihood function. It doesn’t favor any particular outcome over others, allowing the data to have more influence on the posterior distribution. In some cases, noninformative prior may lead to nonintegrable posterior function. This posteriors are referred improper posteriors. However, while noninformative priors are very popular in some applications, they are not always easy to construct (See., Gelman et al., 2014).</p></li>
+<li><p><strong>Improper Prior</strong>:
+Improper prior is a prior distribution that does not integrate to one over its domain, that is;
+<span class="math display">\[
+\int p(\theta)d\theta = \infty.
+\]</span>
+Improper priors are typically used as noninformative or flat priors and proper posterior distribution. For example, a flat prior <span class="math inline">\(p(\theta) = k\)</span> over an infinite range <span class="math inline">\((-\infty, \infty)\)</span>, is an improper prior. Often improper priors leads to improper posterior distributions and only valid in practive if the posterior is proper, i.e., the posterior <span class="math inline">\(\int p(y|\theta)p(\theta)d\theta=1\)</span>. Statistical inference based on the improper posterior distribution is invalid.</p></li>
+<li><p><strong>Informative Prior:</strong> Informative prior is a prior specified to incorporate specific, substantive prior knowledge about the parameter based on previous studies, expert opinion, or other reliable sources. For instance, if we know from experience that a machine’s failure rate is low, we might use a prior that favors low failure rates. If previous studies suggest that a proportion <span class="math inline">\(\theta\)</span> (e.g., success rate) is likely around 70%, we might use
+<span class="math display">\[
+\theta \sim Beta(7, 3),
+\]</span>
+which reflects that the prior belief is based on 7 sucesses and 3 failures. If we have prior knowledge that the mean of a parameter, <span class="math inline">\(\mu\)</span>, is likeliy around 10 with high confidence, based on prior studies. We can specify a normal prior
+<span class="math display">\[
+\mu\sim \mathcal{N}(10, 2^2),
+\]</span>
+where the mean is 10, and the standard deviation is 2, reflecting how confident we are in the prior belief. It is a prior that dominate the likelihood and has an impact on the posterior distribution.</p></li>
+<li><p><strong>Conjugate Priors:</strong> A <span class="math inline">\(conjugate\)</span> <span class="math inline">\(prior\)</span> is a specific type of prior distribution when combined with a specific likelihood, results in a posterior distribution of the same type as the prior. In short, prior distribution and the derived posterior distribution belong to the same family of distribution. For example, suppose a random variable follows binomial distribution, in short, <span class="math inline">\(y\sim Bin(m \theta)\)</span> where <span class="math inline">\(n\)</span> is the number of trials, and <span class="math inline">\(\theta\)</span> is the success probability. The distribution of <span class="math inline">\(y\)</span> is
+<span class="math display">\[
+p(y|\theta)\propto \theta^y(1-\theta)^{n-y}.
+\]</span>
+Since, <span class="math inline">\(\theta\)</span> is assumed to be a random process, the conjugate prior is
+<span class="math display">\[
+\theta\sim Beta(\alpha, \beta).
+\]</span>
+The updated posterior, i.e., combining likelihood and prior, the posterior distribution is
+<span class="math display">\[
+\theta|y \sim Beta(\alpha + y, \beta+n-y),
+\]</span>
+which is recognized as a Beta distribution with shape and scale parameters <span class="math inline">\(\alpha+y\)</span> and <span class="math inline">\(\beta+n-y\)</span>, respectively. Here we can easily observe that both prior and the posterior distributions follow Beta distribution. Hence Beta Prior is the natural conjugate prior for <span class="math inline">\(\theta\)</span>, the probability of success.</p></li>
+</ul>
+<p>If <span class="math inline">\(\theta\)</span> represents the parameter of interest, the prior distribution for <span class="math inline">\(\theta\)</span> is denoted as <span class="math inline">\(p(\theta)\)</span>. If there are multiple parameters, the joint prior distribution is written as <span class="math inline">\(p(\theta_1, \theta_2)\)</span>.</p>
+<div id="uniform-or-discrete-prior" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> Uniform or Discrete Prior<a href="parameters-priors-and-posteriors.html#uniform-or-discrete-prior" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>If a distribution function has a constant trend over the range space of the parameter, then the parameter has discrete distribution function. If the parameter <span class="math inline">\(\theta\)</span> takes discrete or countably infinite set of values, a discrete prior can be specified. For example, if a population of successes and failures where <span class="math inline">\(\theta\)</span> represent the proportion of success, <span class="math inline">\(\theta\)</span> would take one of the discrete values in the set <span class="math inline">\({0.0, 0.01, \ldots, 0.99, 1.0}\)</span>, and the prior would be a probability distribution over these values.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="parameters-priors-and-posteriors.html#cb29-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-2"><a href="parameters-priors-and-posteriors.html#cb29-2" tabindex="-1"></a> p <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">by =</span> <span class="fl">0.01</span>)</span>
+<span id="cb29-3"><a href="parameters-priors-and-posteriors.html#cb29-3" tabindex="-1"></a> prior <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">101</span> <span class="sc">+</span> <span class="dv">0</span> <span class="sc">*</span> p</span>
+<span id="cb29-4"><a href="parameters-priors-and-posteriors.html#cb29-4" tabindex="-1"></a>df_prior <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="at">p=</span>p, <span class="at">prior=</span>prior)</span>
+<span id="cb29-5"><a href="parameters-priors-and-posteriors.html#cb29-5" tabindex="-1"></a><span class="fu">head</span>(df_prior)</span></code></pre></div>
+<pre><code>##         p      prior
+## [1,] 0.00 0.00990099
+## [2,] 0.01 0.00990099
+## [3,] 0.02 0.00990099
+## [4,] 0.03 0.00990099
+## [5,] 0.04 0.00990099
+## [6,] 0.05 0.00990099</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="parameters-priors-and-posteriors.html#cb31-1" tabindex="-1"></a><span class="fu">ggplot</span>(df_prior, <span class="fu">aes</span>(<span class="at">x =</span> p, <span class="at">y =</span> prior)) <span class="sc">+</span></span>
+<span id="cb31-2"><a href="parameters-priors-and-posteriors.html#cb31-2" tabindex="-1"></a>   <span class="fu">geom_linerange</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> prior), </span>
+<span id="cb31-3"><a href="parameters-priors-and-posteriors.html#cb31-3" tabindex="-1"></a>                  <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a href="parameters-priors-and-posteriors.html#cb31-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;&quot;</span>, </span>
+<span id="cb31-5"><a href="parameters-priors-and-posteriors.html#cb31-5" tabindex="-1"></a>        <span class="at">x =</span> <span class="fu">expression</span>(theta), </span>
+<span id="cb31-6"><a href="parameters-priors-and-posteriors.html#cb31-6" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Prior probability&quot;</span>) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="parameters-priors-and-posteriors.html#cb31-7" tabindex="-1"></a>   <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="fl">0.015</span>) <span class="sc">+</span> </span>
+<span id="cb31-8"><a href="parameters-priors-and-posteriors.html#cb31-8" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig7"></span>
+<img src="_main_files/figure-html/fig7-1.png" alt="Discrete prior distribution of $\theta$" width="576" />
+<p class="caption">
+Figure 3.7: Discrete prior distribution of <span class="math inline">\(\theta\)</span>
+</p>
+</div>
+<p>Uniform or discrete prior assumes that all values within a range are equally likely, and used when no prior information is available towards the parameter of interest.</p>
+</div>
+<div id="normal-or-gaussian-prior" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> Normal or Gaussian Prior<a href="parameters-priors-and-posteriors.html#normal-or-gaussian-prior" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>A normal prior is a prior with a normal distribution centered around its mean value with some uncertainty. It is used when we expect values to cluster around a mean.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="parameters-priors-and-posteriors.html#cb32-1" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb32-2"><a href="parameters-priors-and-posteriors.html#cb32-2" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x_vals, <span class="at">density =</span> <span class="fu">dnorm</span>(x_vals, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>))</span>
+<span id="cb32-3"><a href="parameters-priors-and-posteriors.html#cb32-3" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="parameters-priors-and-posteriors.html#cb32-4" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> density)) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="parameters-priors-and-posteriors.html#cb32-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb32-6"><a href="parameters-priors-and-posteriors.html#cb32-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;&quot;</span>, </span>
+<span id="cb32-7"><a href="parameters-priors-and-posteriors.html#cb32-7" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta), </span>
+<span id="cb32-8"><a href="parameters-priors-and-posteriors.html#cb32-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
+<span id="cb32-9"><a href="parameters-priors-and-posteriors.html#cb32-9" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig8"></span>
+<img src="_main_files/figure-html/fig8-1.png" alt="Normal prior distribution of $\theta$" width="576" />
+<p class="caption">
+Figure 3.8: Normal prior distribution of <span class="math inline">\(\theta\)</span>
+</p>
+</div>
+</div>
+<div id="beta-prior" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> Beta Prior<a href="parameters-priors-and-posteriors.html#beta-prior" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In probability theory, <strong>Beta distribution</strong> is a family of continuous probability distribution often used to model the uncertainty about the probability of success of an experiment. It is parametrized by shape parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> both greater than 0, which shape the distribution.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="parameters-priors-and-posteriors.html#cb33-1" tabindex="-1"></a><span class="co"># Create a sequence of x values from 0 to 1</span></span>
+<span id="cb33-2"><a href="parameters-priors-and-posteriors.html#cb33-2" tabindex="-1"></a>x_vals <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb33-3"><a href="parameters-priors-and-posteriors.html#cb33-3" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="parameters-priors-and-posteriors.html#cb33-4" tabindex="-1"></a><span class="co"># Compute different Beta densities for the given parameters</span></span>
+<span id="cb33-5"><a href="parameters-priors-and-posteriors.html#cb33-5" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb33-6"><a href="parameters-priors-and-posteriors.html#cb33-6" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">rep</span>(x_vals, <span class="dv">6</span>),</span>
+<span id="cb33-7"><a href="parameters-priors-and-posteriors.html#cb33-7" tabindex="-1"></a>  <span class="at">density =</span> <span class="fu">c</span>(</span>
+<span id="cb33-8"><a href="parameters-priors-and-posteriors.html#cb33-8" tabindex="-1"></a>    <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="fl">0.5</span>, <span class="at">shape2 =</span> <span class="fl">0.5</span>),  <span class="co"># Beta(0.5, 0.5)</span></span>
+<span id="cb33-9"><a href="parameters-priors-and-posteriors.html#cb33-9" tabindex="-1"></a>    <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="dv">1</span>, <span class="at">shape2 =</span> <span class="dv">1</span>),      <span class="co"># Beta(1, 1)</span></span>
+<span id="cb33-10"><a href="parameters-priors-and-posteriors.html#cb33-10" tabindex="-1"></a>    <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="dv">2</span>, <span class="at">shape2 =</span> <span class="dv">2</span>),      <span class="co"># Beta(2, 2)</span></span>
+<span id="cb33-11"><a href="parameters-priors-and-posteriors.html#cb33-11" tabindex="-1"></a>    <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="dv">1</span>, <span class="at">shape2 =</span> <span class="dv">3</span>),      <span class="co"># Beta(1, 3)</span></span>
+<span id="cb33-12"><a href="parameters-priors-and-posteriors.html#cb33-12" tabindex="-1"></a>    <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="dv">5</span>, <span class="at">shape2 =</span> <span class="dv">2</span>),      <span class="co"># Beta(5, 2)</span></span>
+<span id="cb33-13"><a href="parameters-priors-and-posteriors.html#cb33-13" tabindex="-1"></a>    <span class="fu">dbeta</span>(x_vals, <span class="at">shape1 =</span> <span class="dv">2</span>, <span class="at">shape2 =</span> <span class="dv">5</span>)       <span class="co"># Beta(2, 5)</span></span>
+<span id="cb33-14"><a href="parameters-priors-and-posteriors.html#cb33-14" tabindex="-1"></a>  ),</span>
+<span id="cb33-15"><a href="parameters-priors-and-posteriors.html#cb33-15" tabindex="-1"></a>  <span class="at">Beta_Type =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Beta(0.5,0.5)&quot;</span>, </span>
+<span id="cb33-16"><a href="parameters-priors-and-posteriors.html#cb33-16" tabindex="-1"></a>                    <span class="st">&quot;Beta(1,1)&quot;</span>, </span>
+<span id="cb33-17"><a href="parameters-priors-and-posteriors.html#cb33-17" tabindex="-1"></a>                    <span class="st">&quot;Beta(2,2)&quot;</span>, </span>
+<span id="cb33-18"><a href="parameters-priors-and-posteriors.html#cb33-18" tabindex="-1"></a>                    <span class="st">&quot;Beta(1,3)&quot;</span>, </span>
+<span id="cb33-19"><a href="parameters-priors-and-posteriors.html#cb33-19" tabindex="-1"></a>                    <span class="st">&quot;Beta(5,2)&quot;</span>, </span>
+<span id="cb33-20"><a href="parameters-priors-and-posteriors.html#cb33-20" tabindex="-1"></a>                    <span class="st">&quot;Beta(2,5)&quot;</span>), </span>
+<span id="cb33-21"><a href="parameters-priors-and-posteriors.html#cb33-21" tabindex="-1"></a>                  <span class="at">each =</span> <span class="dv">100</span>)</span>
+<span id="cb33-22"><a href="parameters-priors-and-posteriors.html#cb33-22" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="parameters-priors-and-posteriors.html#cb34-1" tabindex="-1"></a><span class="co"># Plot using ggplot2</span></span>
+<span id="cb34-2"><a href="parameters-priors-and-posteriors.html#cb34-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb34-3"><a href="parameters-priors-and-posteriors.html#cb34-3" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="parameters-priors-and-posteriors.html#cb34-4" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x =</span> x, </span>
+<span id="cb34-5"><a href="parameters-priors-and-posteriors.html#cb34-5" tabindex="-1"></a>                 <span class="at">y =</span> density, </span>
+<span id="cb34-6"><a href="parameters-priors-and-posteriors.html#cb34-6" tabindex="-1"></a>                 <span class="at">color =</span> Beta_Type)) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="parameters-priors-and-posteriors.html#cb34-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb34-8"><a href="parameters-priors-and-posteriors.html#cb34-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;&quot;</span>, </span>
+<span id="cb34-9"><a href="parameters-priors-and-posteriors.html#cb34-9" tabindex="-1"></a>       <span class="at">x =</span> <span class="fu">expression</span>(theta), </span>
+<span id="cb34-10"><a href="parameters-priors-and-posteriors.html#cb34-10" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;Density&quot;</span>,</span>
+<span id="cb34-11"><a href="parameters-priors-and-posteriors.html#cb34-11" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">&quot;Distribution&quot;</span>) <span class="sc">+</span></span>
+<span id="cb34-12"><a href="parameters-priors-and-posteriors.html#cb34-12" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb34-13"><a href="parameters-priors-and-posteriors.html#cb34-13" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, </span>
+<span id="cb34-14"><a href="parameters-priors-and-posteriors.html#cb34-14" tabindex="-1"></a>                                <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb34-15"><a href="parameters-priors-and-posteriors.html#cb34-15" tabindex="-1"></a>                                <span class="st">&quot;green&quot;</span>, </span>
+<span id="cb34-16"><a href="parameters-priors-and-posteriors.html#cb34-16" tabindex="-1"></a>                                <span class="st">&quot;purple&quot;</span>, </span>
+<span id="cb34-17"><a href="parameters-priors-and-posteriors.html#cb34-17" tabindex="-1"></a>                                <span class="st">&quot;orange&quot;</span>, </span>
+<span id="cb34-18"><a href="parameters-priors-and-posteriors.html#cb34-18" tabindex="-1"></a>                                <span class="st">&quot;brown&quot;</span>))</span></code></pre></div>
+<div class="figure"><span style="display:block;" id="fig:fig9"></span>
+<img src="_main_files/figure-html/fig9-1.png" alt="Beta prior distribution with different $\alpha$ and $\beta$ values" width="576" />
+<p class="caption">
+Figure 3.9: Beta prior distribution with different <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> values
+</p>
+</div>
+<p>The plot in figure <a href="parameters-priors-and-posteriors.html#fig:fig9">3.9</a> show various prior beliefs about probabilities before observing data. Forexample, the <span class="math inline">\(Beta(0.5, 0.5)\)</span> prior refers to the U-Shaped <strong>Jeffreys Prior</strong> with higher densities near 0 and 1. It is often used to define a noninformative prior with a strong prior belief that the probability is either very low or very high. The <span class="math inline">\(Beta(1,1)\)</span> refers to the <strong>Uniform Prior</strong> or <strong>flat prior distribution</strong>. It is often used to define a noninformative prior with a strong prior belief to assigns equal probability to the parameter. The <span class="math inline">\(Beta(1, 3)\)</span>, <span class="math inline">\(Beta(2,5)\)</span>, and <span class="math inline">\(Beta(5, 2)\)</span> priors express preference for certain probability ranges, whereas the <span class="math inline">\(Beta(2, 2)\)</span> prior is a symmetric or normal prior favoring moderate values. If we assume that <span class="math inline">\(\alpha-1\)</span> as the number of successes and <span class="math inline">\(\beta-1\)</span> as the number of failures, <span class="math inline">\(Beta(2, 2)\)</span> means you getting <span class="math inline">\(1\)</span> success and <span class="math inline">\(1\)</span> failure, so that the probability of the success would become the highest at 0.5. Each of the priors shown in figure <a href="parameters-priors-and-posteriors.html#fig:fig9">3.9</a> can be used depending on our <strong>beliefs</strong> before observing data.</p>
+<p>In summary</p>
+<ul>
+<li><p>Beta prior is a conjugate prior with</p>
+<ul>
+<li>Bernoulli, binomial, negative binomial, and geometric distributions.</li>
+</ul></li>
+<li><p>Dirichlet prior is conjugate prior with</p>
+<ul>
+<li>Multinomial distribution</li>
+</ul></li>
+<li><p>Normal prior is conjugate prior with</p>
+<ul>
+<li>Normal distribution when used for the mean and the variance is known</li>
+</ul></li>
+<li><p>Gamma (Inverse-Gamma) prior is conjugate prior with</p>
+<ul>
+<li>Normal distribution with known mean when used for the precision (variance) the variance. Precision is inverse of a variance parameter.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="posterior-distributions-1" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Posterior distributions<a href="parameters-priors-and-posteriors.html#posterior-distributions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The mechanism that underpins all of Bayesian statistical analysis is Bayes’ rule9, which describes how to update uncertainty in light of new information, evidence, or data.</p>
+<p><strong>Example 1.4:</strong> Continuing example 1.4 in Chapter 1, find the posterior distribution of the proportion of left-handed students in the population assuming (i) uninformative prior, (ii) informative prior assuming 5 - 20% of people are left-handed according to the literature.</p>
+<p><em>Solution</em>
+- Recall that the random variable <span class="math inline">\(y\)</span> has a binomial distribution:</p>
+<p><span class="math display">\[
+y \sim Bin(n=30, \theta),\,\,
+\]</span>
+with the likelihood function:
+<span class="math display">\[
+L(\theta|y) = \binom{n}{y} \theta^y (1 - \theta)^{n - y},
+\]</span></p>
+<p>The natural conjugate prior for a binomial parameter <span class="math inline">\(\theta\)</span> is the <span class="math inline">\(Beta(\alpha, \beta)\)</span> prior as discussed in the section 2.3. The posterior distribution of <span class="math inline">\(\theta|y\)</span> (the derivation is discussed in the next chapter), has a Beta distribution, i.e., <span class="math inline">\(\theta|y\sim Beta(y + \alpha, n - y + \beta)\)</span>. The following code simulate and plot both prior and prior distribution.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="parameters-priors-and-posteriors.html#cb35-1" tabindex="-1"></a><span class="co"># Given data</span></span>
+<span id="cb35-2"><a href="parameters-priors-and-posteriors.html#cb35-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">7</span>  <span class="co"># Left-handed students</span></span>
+<span id="cb35-3"><a href="parameters-priors-and-posteriors.html#cb35-3" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">30</span> <span class="co"># Total students</span></span>
+<span id="cb35-4"><a href="parameters-priors-and-posteriors.html#cb35-4" tabindex="-1"></a><span class="co"># Create a sequence of p values for density plotting</span></span>
+<span id="cb35-5"><a href="parameters-priors-and-posteriors.html#cb35-5" tabindex="-1"></a>p_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb35-6"><a href="parameters-priors-and-posteriors.html#cb35-6" tabindex="-1"></a>likelihood <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(y, n, p_seq)  <span class="co"># Likelihood (up to scale factor)</span></span>
+<span id="cb35-7"><a href="parameters-priors-and-posteriors.html#cb35-7" tabindex="-1"></a>likelihood <span class="ot">&lt;-</span> likelihood <span class="sc">/</span> <span class="fu">max</span>(likelihood)</span>
+<span id="cb35-8"><a href="parameters-priors-and-posteriors.html#cb35-8" tabindex="-1"></a>p_hat <span class="ot">&lt;-</span> y <span class="sc">/</span> n  <span class="co"># MLE estimate</span></span>
+<span id="cb35-9"><a href="parameters-priors-and-posteriors.html#cb35-9" tabindex="-1"></a>p_hat</span></code></pre></div>
+<pre><code>## [1] 0.2333333</code></pre>
+<p><strong>Uninformative (Uniform) prior</strong></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="parameters-priors-and-posteriors.html#cb37-1" tabindex="-1"></a><span class="co"># Define priors</span></span>
+<span id="cb37-2"><a href="parameters-priors-and-posteriors.html#cb37-2" tabindex="-1"></a>alpha_unif <span class="ot">&lt;-</span> <span class="dv">1</span>; beta_unif <span class="ot">&lt;-</span> <span class="dv">1</span>  <span class="co"># </span></span>
+<span id="cb37-3"><a href="parameters-priors-and-posteriors.html#cb37-3" tabindex="-1"></a><span class="co"># Compute posterior parameters</span></span>
+<span id="cb37-4"><a href="parameters-priors-and-posteriors.html#cb37-4" tabindex="-1"></a>post_alpha_unif <span class="ot">&lt;-</span> alpha_unif <span class="sc">+</span> y</span>
+<span id="cb37-5"><a href="parameters-priors-and-posteriors.html#cb37-5" tabindex="-1"></a>post_beta_unif <span class="ot">&lt;-</span> beta_unif <span class="sc">+</span> (n <span class="sc">-</span> y)</span>
+<span id="cb37-6"><a href="parameters-priors-and-posteriors.html#cb37-6" tabindex="-1"></a><span class="co"># Compute densities</span></span>
+<span id="cb37-7"><a href="parameters-priors-and-posteriors.html#cb37-7" tabindex="-1"></a>prior_unif <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(p_seq, alpha_unif, beta_unif)</span>
+<span id="cb37-8"><a href="parameters-priors-and-posteriors.html#cb37-8" tabindex="-1"></a>posterior_unif <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(p_seq, post_alpha_unif, post_beta_unif)</span></code></pre></div>
+<p>Create dataframe for noninformative prior</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="parameters-priors-and-posteriors.html#cb38-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb38-2"><a href="parameters-priors-and-posteriors.html#cb38-2" tabindex="-1"></a>  <span class="at">p =</span> <span class="fu">rep</span>(p_seq, <span class="dv">3</span>),</span>
+<span id="cb38-3"><a href="parameters-priors-and-posteriors.html#cb38-3" tabindex="-1"></a>  <span class="at">Density =</span> <span class="fu">c</span>(prior_unif,  likelihood, posterior_unif),</span>
+<span id="cb38-4"><a href="parameters-priors-and-posteriors.html#cb38-4" tabindex="-1"></a>  <span class="at">Distribution =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Prior&quot;</span>, <span class="st">&quot;Likelihood&quot;</span>, <span class="st">&quot;Posterior&quot;</span>), </span>
+<span id="cb38-5"><a href="parameters-priors-and-posteriors.html#cb38-5" tabindex="-1"></a>                     <span class="at">each =</span> <span class="fu">length</span>(p_seq))</span>
+<span id="cb38-6"><a href="parameters-priors-and-posteriors.html#cb38-6" tabindex="-1"></a>)</span>
+<span id="cb38-7"><a href="parameters-priors-and-posteriors.html#cb38-7" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<pre><code>##             p Density Distribution
+## 1 0.000000000       1        Prior
+## 2 0.001001001       1        Prior
+## 3 0.002002002       1        Prior
+## 4 0.003003003       1        Prior
+## 5 0.004004004       1        Prior
+## 6 0.005005005       1        Prior</code></pre>
+<p>Plot for uninformative prior</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="parameters-priors-and-posteriors.html#cb40-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb40-2"><a href="parameters-priors-and-posteriors.html#cb40-2" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> p, <span class="at">y =</span> Density, <span class="at">color =</span> Distribution)) <span class="sc">+</span></span>
+<span id="cb40-3"><a href="parameters-priors-and-posteriors.html#cb40-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="parameters-priors-and-posteriors.html#cb40-4" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> p_hat, </span>
+<span id="cb40-5"><a href="parameters-priors-and-posteriors.html#cb40-5" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, </span>
+<span id="cb40-6"><a href="parameters-priors-and-posteriors.html#cb40-6" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb40-7"><a href="parameters-priors-and-posteriors.html#cb40-7" tabindex="-1"></a>             <span class="at">label=</span><span class="st">&quot;MLE&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-8"><a href="parameters-priors-and-posteriors.html#cb40-8" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> (post_alpha_unif <span class="sc">/</span> (post_alpha_unif <span class="sc">+</span> post_beta_unif)), </span>
+<span id="cb40-9"><a href="parameters-priors-and-posteriors.html#cb40-9" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, </span>
+<span id="cb40-10"><a href="parameters-priors-and-posteriors.html#cb40-10" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb40-11"><a href="parameters-priors-and-posteriors.html#cb40-11" tabindex="-1"></a>             <span class="at">label=</span><span class="st">&quot;Posterior Mean&quot;</span>) <span class="sc">+</span></span>
+<span id="cb40-12"><a href="parameters-priors-and-posteriors.html#cb40-12" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb40-13"><a href="parameters-priors-and-posteriors.html#cb40-13" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Posterior distribution with noninformative prior&quot;</span>, </span>
+<span id="cb40-14"><a href="parameters-priors-and-posteriors.html#cb40-14" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Proportion of left-handed students&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p><strong>Informative prior</strong></p>
+<p>Create a dataframe for informative prior</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="parameters-priors-and-posteriors.html#cb41-1" tabindex="-1"></a>alpha_inf <span class="ot">&lt;-</span> <span class="dv">5</span>; beta_inf <span class="ot">&lt;-</span> <span class="dv">25</span>  <span class="co"># Informative prior (centered around 10%)</span></span>
+<span id="cb41-2"><a href="parameters-priors-and-posteriors.html#cb41-2" tabindex="-1"></a>post_alpha_inf <span class="ot">&lt;-</span> alpha_inf <span class="sc">+</span> y</span>
+<span id="cb41-3"><a href="parameters-priors-and-posteriors.html#cb41-3" tabindex="-1"></a>post_beta_inf <span class="ot">&lt;-</span> beta_inf <span class="sc">+</span> (n <span class="sc">-</span> y)</span>
+<span id="cb41-4"><a href="parameters-priors-and-posteriors.html#cb41-4" tabindex="-1"></a>prior_inf <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(p_seq, alpha_inf, beta_inf)</span>
+<span id="cb41-5"><a href="parameters-priors-and-posteriors.html#cb41-5" tabindex="-1"></a>posterior_inf <span class="ot">&lt;-</span> <span class="fu">dbeta</span>(p_seq, post_alpha_inf, post_beta_inf)</span>
+<span id="cb41-6"><a href="parameters-priors-and-posteriors.html#cb41-6" tabindex="-1"></a></span>
+<span id="cb41-7"><a href="parameters-priors-and-posteriors.html#cb41-7" tabindex="-1"></a>df_inf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb41-8"><a href="parameters-priors-and-posteriors.html#cb41-8" tabindex="-1"></a>  <span class="at">p =</span> <span class="fu">rep</span>(p_seq, <span class="dv">3</span>),</span>
+<span id="cb41-9"><a href="parameters-priors-and-posteriors.html#cb41-9" tabindex="-1"></a>  <span class="at">Density =</span> <span class="fu">c</span>(prior_inf, likelihood, posterior_inf),</span>
+<span id="cb41-10"><a href="parameters-priors-and-posteriors.html#cb41-10" tabindex="-1"></a>  <span class="at">Distribution =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&quot;Prior&quot;</span>, <span class="st">&quot;Likelihood&quot;</span>, <span class="st">&quot;Posterior&quot;</span>), <span class="at">each =</span> <span class="fu">length</span>(p_seq))</span>
+<span id="cb41-11"><a href="parameters-priors-and-posteriors.html#cb41-11" tabindex="-1"></a>)</span>
+<span id="cb41-12"><a href="parameters-priors-and-posteriors.html#cb41-12" tabindex="-1"></a><span class="fu">head</span>(df_inf)</span></code></pre></div>
+<pre><code>##             p      Density Distribution
+## 1 0.000000000 0.000000e+00        Prior
+## 2 0.001001001 5.819976e-07        Prior
+## 3 0.002002002 9.090589e-06        Prior
+## 4 0.003003003 4.492596e-05        Prior
+## 5 0.004004004 1.386060e-04        Prior
+## 6 0.005005005 3.303250e-04        Prior</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="parameters-priors-and-posteriors.html#cb43-1" tabindex="-1"></a><span class="co"># Plot for informative prior</span></span>
+<span id="cb43-2"><a href="parameters-priors-and-posteriors.html#cb43-2" tabindex="-1"></a><span class="fu">ggplot</span>(df_inf, <span class="fu">aes</span>(<span class="at">x =</span> p, </span>
+<span id="cb43-3"><a href="parameters-priors-and-posteriors.html#cb43-3" tabindex="-1"></a>                   <span class="at">y =</span> Density,</span>
+<span id="cb43-4"><a href="parameters-priors-and-posteriors.html#cb43-4" tabindex="-1"></a>                   <span class="at">color =</span> Distribution)) <span class="sc">+</span></span>
+<span id="cb43-5"><a href="parameters-priors-and-posteriors.html#cb43-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb43-6"><a href="parameters-priors-and-posteriors.html#cb43-6" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> p_hat, </span>
+<span id="cb43-7"><a href="parameters-priors-and-posteriors.html#cb43-7" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>, </span>
+<span id="cb43-8"><a href="parameters-priors-and-posteriors.html#cb43-8" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;black&quot;</span>, </span>
+<span id="cb43-9"><a href="parameters-priors-and-posteriors.html#cb43-9" tabindex="-1"></a>             <span class="at">label=</span><span class="st">&quot;MLE&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-10"><a href="parameters-priors-and-posteriors.html#cb43-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> (post_alpha_inf <span class="sc">/</span> (post_alpha_inf <span class="sc">+</span> post_beta_inf)), </span>
+<span id="cb43-11"><a href="parameters-priors-and-posteriors.html#cb43-11" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dotted&quot;</span>, </span>
+<span id="cb43-12"><a href="parameters-priors-and-posteriors.html#cb43-12" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb43-13"><a href="parameters-priors-and-posteriors.html#cb43-13" tabindex="-1"></a>             <span class="at">label=</span><span class="st">&quot;Posterior Mean&quot;</span>) <span class="sc">+</span></span>
+<span id="cb43-14"><a href="parameters-priors-and-posteriors.html#cb43-14" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb43-15"><a href="parameters-priors-and-posteriors.html#cb43-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Posterior distribution with informative prior&quot;</span>, </span>
+<span id="cb43-16"><a href="parameters-priors-and-posteriors.html#cb43-16" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Proportion of left-handed students&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p><strong>Activity:</strong></p>
+<p>Do people prefer to use the word “data” as singular or plural?
+Data journalists at <span class="math inline">\(FiveThirtyEight\)</span> conducted a poll to address this question (and others). Rather than simply ask whether the respondent considered “data” to be singular or plural, they asked which of the following sentences they prefer:</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>Some experts say it’s important to drink milk, but the data is inconclusive.</p></li>
+<li><p>Some experts say it’s important to drink milk, but the data are inconclusive.</p></li>
+</ol>
+<p>Suppose we wish to study the opinions of students in Cal Poly statistics classes regarding this issue. That is, let <span class="math inline">\(\theta\)</span> represent the population proportion of students in Cal Poly statistics classes who prefer to consider data as a singular noun, as in option a) above. To illustrate ideas, we’ll start with a prior distribution which places probability 0.01, 0.05, 0.15, 0.30, 0.49 on the values 0.1, 0.3, 0.5, 0.7, 0.9, respectively.</p>
+<ol style="list-style-type: decimal">
+<li><p>Before observing any data, suppose we plan to randomly select a single Cal Poly statistics student. Consider the unconditional prior probability that the selected student prefers data as singular. (This is called a prior predictive probability.) Explain how you could use simulation to approximate this probability.</p></li>
+<li><p>Compute the prior predictive probability from the previous part.</p></li>
+<li><p>Before observing any data, suppose we plan to randomly select a sample of 35 Cal Poly statistics students. Consider the unconditional prior distribution of the number of students in the sample who prefer data as singular. (This is called a prior predictive distribution.) Explain how you could use simulation to approximate this distribution. In particular, how could you use simulation to approximate the prior predictive probability
+that at least 34 students in the sample prefer data as singular?</p></li>
+<li><p>Compute and interpret the prior predictive probability that at least 34 students in a sample of size 35 prefer data as singular.
+For the remaining parts, suppose that 31 students in a sample
+of 35 Cal Poly statistics students prefer data as singular.</p></li>
+<li><p>Find the posterior distribution of <span class="math inline">\(\theta\)</span>.</p></li>
+<li><p>Now suppose we plan to randomly select an additional Cal Poly statistics student. Consider the posterior predictive probability that this student prefers data as singular. Explain how you could use simulation to estimate this probability.</p></li>
+<li><p>Compute the posterior predictive probability from the previous part.</p></li>
+<li><p>Suppose we plan to collect data on another sample of 35 Cal Poly statistics students. Consider the posterior predictive distribution of the number of students in the new sample who prefer data as singular. Explain how you could use simulation to approximate this distribution. In particular, how could you use simulation to approximate the prior predictive probability that at least 34 students in the sample prefer data as singular? (Of course, the sample size of the new sample does not have to be 35. However, we’re
+keeping it the same so we can compare the prior and posterior predictions.)</p></li>
+<li><p>Compute and interpret the posterior predictive probability that at least 34 students in a sample of size 35 prefer data as singular.</p></li>
+</ol>
+<p><strong>Solution</strong></p>
+<ol style="list-style-type: decimal">
+<li>If we knew what <span class="math inline">\(\theta\)</span> was, this probability would just be <span class="math inline">\(\theta\)</span>. For example, if <span class="math inline">\(\theta = 0.9\)</span>, then there is a probability of 0.9 that a randomly selected student prefers data singular. If <span class="math inline">\(\theta\)</span> were 0.9, we could approximate the probability by constructing a spinner with 90% of the area marked as ``success”, spinning it many times, and recording the proportion of spins that land on success, which should be roughly 90%. However, 0.9 is only one possible value of <span class="math inline">\(\theta\)</span>. Since we don’t know what <span class="math inline">\(\theta\)</span> is, we need to first simulate a value of it, giving more weight to <span class="math inline">\(\theta\)</span> values with high prior probability. Therefore, we</li>
+</ol>
+<ol style="list-style-type: lower-roman">
+<li><p>Simulate a value of <span class="math inline">\(\theta\)</span> from the prior distribution</p></li>
+<li><p>Given the value of <span class="math inline">\(\theta\)</span>, construct a spinner that lands on success with probability <span class="math inline">\(\theta\)</span>. Spin the spinner once and record the result, success or not.</p></li>
+<li><p>Repeat steps 1 and 2 many times, and find the proportion of repetitions which result in success. This proportion approximates the unconditional prior probability of success.</p></li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Use the law of total probability, where the weights are given by the prior probabilities.
+<span class="math display">\[
+0.1(0.01) + 0.3(0.05) + 0.5(0.15) + 0.7(0.30) + 0.9(0.49) = 0.742
+\]</span>
+(This calculation is equivalent to the expected value of <span class="math inline">\(\theta\)</span> according to its prior distribution, that is, the prior mean.)</p></li>
+<li><p>If we knew what <span class="math inline">\(\theta\)</span> was, we could construct a spinner that lands on success with probability <span class="math inline">\(\theta\)</span>, spin it 35 times, and count the number of successes. Since we don’t know what <span class="math inline">\(\theta\)</span> is, we need to first simulate a value of it, giving more weight to <span class="math inline">\(\theta\)</span> values with high prior probability. Therefore, we</p></li>
+</ol>
+<ul>
+<li><p>Simulate a value of <span class="math inline">\(\theta\)</span> from the prior distribution.</p></li>
+<li><p>Given the value of <span class="math inline">\(\theta\)</span>, construct a spinner that lands on success with probability <span class="math inline">\(\theta\)</span>. Spin the spinner 35 times and count <span class="math inline">\(y\)</span>, the number of spins that land on success.</p></li>
+<li><p>Repeat steps 1 and 2 many times, and record the number of successes (out of 35) for each repetition. Summarize the simulated <span class="math inline">\(y\)</span> values to approximate the prior predictive distribution. To approximate the prior predictive probability that at least 34 students in a sample of size 35 prefer data as singular, count the number of simulated repetitions that result in at least 34 successes (<span class="math inline">\(y \geq 34\)</span>) and divide by the total number of simulated repetitions.</p></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>If we knew <span class="math inline">\(\theta\)</span>, the probability of at least 34 (out of 35) successes is, from a Binomial distribution,
+<span class="math display">\[
+\binom{35}{34} \theta^{34}(1 - \theta) + \theta^{35}
+\]</span>
+Use the law of total probability again:</li>
+</ol>
+<span class="math display">\[\begin{aligned}
+
+\left(\binom{35}{34} (0.1)^{34} (1 - 0.1) + 0.1^{35} \right)(0.01) + \left(\binom{35}{34} (0.3)^{34} (1 - 0.3) + 0.3^{35} \right)(0.05)
+
+\\
++ \left(\binom{35}{34} (0.5)^{34} (1 - 0.5) + 0.5^{35} \right)(0.15) + \left(\binom{35}{34} (0.7)^{34} (1 - 0.7) + 0.7^{35} \right)(0.30)
+
+\\
++ \left(\binom{35}{34} (0.9)^{34} (1 - 0.9) + 0.9^{35} \right)(0.49) = 0.06
+\end{aligned}\]</span>
+<p>According to this model, about 6% of samples of size 35 would result in at least 34 successes. The value 0.06 accounts for both (1) our prior uncertainty about <span class="math inline">\(\theta\)</span>, and (2) sample-to-sample variability in the number of successes <span class="math inline">\(y\)</span>.</p>
+<ol start="5" style="list-style-type: decimal">
+<li>The likelihood is <span class="math inline">\(\binom{35}{31} \theta^{31} (1 - \theta)^4\)</span>,
+a function of <span class="math inline">\(\theta\)</span>; <span class="math inline">\(\texttt{dbinom(31, 35, \theta)}\)</span>. The posterior places almost all probability on <span class="math inline">\(\theta = 0.9\)</span>, due to both its high prior probability and high likelihood.</li>
+</ol>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="parameters-priors-and-posteriors.html#cb44-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb44-2"><a href="parameters-priors-and-posteriors.html#cb44-2" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb44-3"><a href="parameters-priors-and-posteriors.html#cb44-3" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="parameters-priors-and-posteriors.html#cb47-1" tabindex="-1"></a>theta <span class="ot">=</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>, <span class="fl">0.2</span>)</span>
+<span id="cb47-2"><a href="parameters-priors-and-posteriors.html#cb47-2" tabindex="-1"></a><span class="co"># prior</span></span>
+<span id="cb47-3"><a href="parameters-priors-and-posteriors.html#cb47-3" tabindex="-1"></a>prior <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.05</span>, <span class="fl">0.15</span>, <span class="fl">0.30</span>, <span class="fl">0.49</span>)</span>
+<span id="cb47-4"><a href="parameters-priors-and-posteriors.html#cb47-4" tabindex="-1"></a><span class="co"># data</span></span>
+<span id="cb47-5"><a href="parameters-priors-and-posteriors.html#cb47-5" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">35</span> <span class="co"># sample size</span></span>
+<span id="cb47-6"><a href="parameters-priors-and-posteriors.html#cb47-6" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">31</span> <span class="co"># sample count of success</span></span>
+<span id="cb47-7"><a href="parameters-priors-and-posteriors.html#cb47-7" tabindex="-1"></a><span class="co"># likelihood, using binomial</span></span>
+<span id="cb47-8"><a href="parameters-priors-and-posteriors.html#cb47-8" tabindex="-1"></a>likelihood <span class="ot">=</span> <span class="fu">dbinom</span>(y, n, theta) <span class="co"># function of theta</span></span>
+<span id="cb47-9"><a href="parameters-priors-and-posteriors.html#cb47-9" tabindex="-1"></a><span class="co"># posterior</span></span>
+<span id="cb47-10"><a href="parameters-priors-and-posteriors.html#cb47-10" tabindex="-1"></a>product <span class="ot">=</span> likelihood <span class="sc">*</span> prior</span>
+<span id="cb47-11"><a href="parameters-priors-and-posteriors.html#cb47-11" tabindex="-1"></a>posterior <span class="ot">=</span> product <span class="sc">/</span> <span class="fu">sum</span>(product)</span>
+<span id="cb47-12"><a href="parameters-priors-and-posteriors.html#cb47-12" tabindex="-1"></a><span class="co"># bayes table</span></span>
+<span id="cb47-13"><a href="parameters-priors-and-posteriors.html#cb47-13" tabindex="-1"></a>bayes_table <span class="ot">=</span> <span class="fu">data.frame</span>(theta,</span>
+<span id="cb47-14"><a href="parameters-priors-and-posteriors.html#cb47-14" tabindex="-1"></a>                         prior,</span>
+<span id="cb47-15"><a href="parameters-priors-and-posteriors.html#cb47-15" tabindex="-1"></a>                         likelihood,</span>
+<span id="cb47-16"><a href="parameters-priors-and-posteriors.html#cb47-16" tabindex="-1"></a>                         product,</span>
+<span id="cb47-17"><a href="parameters-priors-and-posteriors.html#cb47-17" tabindex="-1"></a>                         posterior)</span>
+<span id="cb47-18"><a href="parameters-priors-and-posteriors.html#cb47-18" tabindex="-1"></a>bayes_table <span class="sc">%&gt;%</span></span>
+<span id="cb47-19"><a href="parameters-priors-and-posteriors.html#cb47-19" tabindex="-1"></a><span class="fu">adorn_totals</span>(<span class="st">&quot;row&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-20"><a href="parameters-priors-and-posteriors.html#cb47-20" tabindex="-1"></a><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">4</span>, <span class="at">align =</span> <span class="st">&#39;r&#39;</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="right">theta</th>
+<th align="right">prior</th>
+<th align="right">likelihood</th>
+<th align="right">product</th>
+<th align="right">posterior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">0.1</td>
+<td align="right">0.01</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="right">0.3</td>
+<td align="right">0.05</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="odd">
+<td align="right">0.5</td>
+<td align="right">0.15</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+<td align="right">0.0000</td>
+</tr>
+<tr class="even">
+<td align="right">0.7</td>
+<td align="right">0.30</td>
+<td align="right">0.0067</td>
+<td align="right">0.0020</td>
+<td align="right">0.0201</td>
+</tr>
+<tr class="odd">
+<td align="right">0.9</td>
+<td align="right">0.49</td>
+<td align="right">0.1998</td>
+<td align="right">0.0979</td>
+<td align="right">0.9799</td>
+</tr>
+<tr class="even">
+<td align="right">Total</td>
+<td align="right">1.00</td>
+<td align="right">0.2065</td>
+<td align="right">0.0999</td>
+<td align="right">1.0000</td>
+</tr>
+</tbody>
+</table>
+<ol start="6" style="list-style-type: decimal">
+<li>The simulation would be similar to the prior simulation, but now we simulate <span class="math inline">\(\theta\)</span> from its posterior distribution rather than the prior distribution.</li>
+</ol>
+<ul>
+<li><p>Simulate a value of <span class="math inline">\(\theta\)</span> from the posterior distribution.</p></li>
+<li><p>Given the value of <span class="math inline">\(\theta\)</span>, construct a spinner that lands on success with probability <span class="math inline">\(\theta\)</span>. Spin the spinner once and record the result, success or not.</p></li>
+<li><p>Repeat steps 1 and 2 many times, and find the proportion of repetitions which result in success. This proportion approximates the unconditional posterior probability of success.</p></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>Use the law of total probability, where the weights are given by the posterior probabilities.</li>
+</ol>
+<p><span class="math display">\[
+0.1(0.0000) + 0.3(0.0000) + 0.5(0.0000) + 0.7(0.0201) + 0.9(0.9799) = 0.8960
+\]</span></p>
+<p>(This calculation is equivalent to the expected value of <span class="math inline">\(\theta\)</span> according to its posterior distribution, that is, the posterior mean.)</p>
+<ol start="8" style="list-style-type: decimal">
+<li>The simulation would be similar to the prior simulation, but now we simulate <span class="math inline">\(\theta\)</span> from its posterior distribution rather than the prior distribution.</li>
+</ol>
+<ul>
+<li><p>Simulate a value of <span class="math inline">\(\theta\)</span> from the posterior distribution.</p></li>
+<li><p>Given the value of <span class="math inline">\(\theta\)</span>, construct a spinner that lands on success with probability <span class="math inline">\(\theta\)</span>. Spin the spinner 35 times and count the number of spins that land on success.</p></li>
+<li><p>Repeat steps 1 and 2 many times, and record the number of successes (out of 35) for each repetition. Summarize the simulated values to approximate the posterior predictive distribution. To approximate the posterior predictive probability that at least 34 students in a sample of size 35 prefer data as singular, count the number of simulated repetitions that result in at least 34 successes and divide by the total number of simulated repetitions.</p></li>
+</ul>
+<p>Since the posterior probability that <span class="math inline">\(\theta\)</span> equals 0.9 is close to 1, the posterior predictive distribution would be close to, but not quite, the$ Binom(35, 0.9)$ distribution.</p>
+<ol start="9" style="list-style-type: decimal">
+<li>Use the law of total probability again, but with the posterior probabilities rather than the prior probabilities as the weights.</li>
+</ol>
+<p><span class="math display">\[
+\left(\binom{35}{34} (0.1)^{34} (1 - 0.1) + 0.1^{35} \right)(0.0000) + \left(\binom{35}{34} (0.3)^{34} (1 - 0.3) + 0.3^{35} \right)(0.0000)
+\\
++ \left(\binom{35}{34} (0.5)^{34} (1 - 0.5) + 0.5^{35} \right)(0.0000) + \left(\binom{35}{34} (0.7)^{34} (1 - 0.7) + 0.7^{35} \right)(0.0201)
+\\
++ \left(\binom{35}{34} (0.9)^{34} (1 - 0.9) + 0.9^{35} \right)(0.9799) = 0.1199
+\]</span></p>
+<p>According to this posterior model, about 12% of samples of size 35 would result in at least 34 successes. The value 0.12 accounts for both (1) our posterior uncertainty about <span class="math inline">\(\theta\)</span>, after observing the sample data, and (2) sample-to-sample variability in the number of successes <span class="math inline">\(y\)</span> for the yet-to-be-observed sample.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-bayesian-thinking.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/USERNAME/REPO/edit/BRANCH/02-Priors.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

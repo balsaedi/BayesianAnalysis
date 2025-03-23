@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Introduction to Bayesian Thinking | A Minimal Book Example</title>
+  <meta name="description" content="<p>This is a minimal example of using the bookdown package to write a book.
+set in the _output.yml file.
+The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Introduction to Bayesian Thinking | A Minimal Book Example" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+set in the _output.yml file.
+The HTML output format for this example is bookdown::gitbook,</p>" />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Introduction to Bayesian Thinking | A Minimal Book Example" />
+  
+  <meta name="twitter:description" content="<p>This is a minimal example of using the bookdown package to write a book.
+set in the _output.yml file.
+The HTML output format for this example is bookdown::gitbook,</p>" />
+  
+
+<meta name="author" content="John Doe" />
+
+
+<meta name="date" content="2025-03-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="parameters-priors-and-posteriors.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#usage"><i class="fa fa-check"></i><b>1.1</b> Usage</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#render-book"><i class="fa fa-check"></i><b>1.2</b> Render book</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#preview-book"><i class="fa fa-check"></i><b>1.3</b> Preview book</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html"><i class="fa fa-check"></i><b>2</b> Introduction to Bayesian Thinking</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#introduction"><i class="fa fa-check"></i><b>2.1</b> Introduction</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#the-core-concept-bayesian-vs-frequentist"><i class="fa fa-check"></i><b>2.2</b> The Core Concept: Bayesian vs frequentist</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#motivating-examples"><i class="fa fa-check"></i><b>2.2.1</b> Motivating Examples</a></li>
+<li class="chapter" data-level="2.2.2" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#likelihood-function"><i class="fa fa-check"></i><b>2.2.2</b> Likelihood function</a></li>
+<li class="chapter" data-level="2.2.3" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#prior-distributions-ptheta"><i class="fa fa-check"></i><b>2.2.3</b> Prior distributions: <span class="math inline">\(p(\theta)\)</span></a></li>
+<li class="chapter" data-level="2.2.4" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#posterior-distributions"><i class="fa fa-check"></i><b>2.2.4</b> Posterior distributions</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#applications-of-bayesian-thinking"><i class="fa fa-check"></i><b>2.3</b> Applications of Bayesian Thinking</a></li>
+<li class="chapter" data-level="2.4" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#challenges"><i class="fa fa-check"></i><b>2.4</b> Challenges</a></li>
+<li class="chapter" data-level="" data-path="introduction-to-bayesian-thinking.html"><a href="introduction-to-bayesian-thinking.html#references"><i class="fa fa-check"></i>References</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html"><i class="fa fa-check"></i><b>3</b> Parameters, Priors and Posteriors</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#introduction-1"><i class="fa fa-check"></i><b>3.1</b> Introduction</a></li>
+<li class="chapter" data-level="3.2" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#parameters"><i class="fa fa-check"></i><b>3.2</b> Parameter(s)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#identifying-parameters-in-a-distribution"><i class="fa fa-check"></i><b>3.2.1</b> Identifying parameters in a distribution</a></li>
+<li class="chapter" data-level="3.2.2" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#why-this-matters-in-bayesian-analysis"><i class="fa fa-check"></i><b>3.2.2</b> Why this matters in Bayesian analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#priors"><i class="fa fa-check"></i><b>3.3</b> Priors</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#uniform-or-discrete-prior"><i class="fa fa-check"></i><b>3.3.1</b> Uniform or Discrete Prior</a></li>
+<li class="chapter" data-level="3.3.2" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#normal-or-gaussian-prior"><i class="fa fa-check"></i><b>3.3.2</b> Normal or Gaussian Prior</a></li>
+<li class="chapter" data-level="3.3.3" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#beta-prior"><i class="fa fa-check"></i><b>3.3.3</b> Beta Prior</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="parameters-priors-and-posteriors.html"><a href="parameters-priors-and-posteriors.html#posterior-distributions-1"><i class="fa fa-check"></i><b>3.4</b> Posterior distributions</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Minimal Book Example</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-bayesian-thinking" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Introduction to Bayesian Thinking<a href="introduction-to-bayesian-thinking.html#introduction-to-bayesian-thinking" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="introduction" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Introduction<a href="introduction-to-bayesian-thinking.html#introduction" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>During the past thirty years, statistical analysis using Bayesian technique has evolved enormously and has become the powerful statistical methodology for making decision from data. It is not just a family of techniques but brings a new way of thinking to statistics, it provides a powerful framework for reasoning about uncertainty, making decisions, and updating beliefs in the face of new evidence. Bayesian thinking has become a cornerstone of modern statistics, engineering, medicine, social sciences, and data sciences, and underpins much of the developing fields of machine learning and artificial intelligence (AI). In simple terms, it’s an approach that enables you to adjust your critical thinking in reactively to new evidence. Critical thinking is an active and continuous process that requires an approach like Bayesians, constantly refining and updating our knowledge as new information emerges.</p>
+<p>In this chapter, we explore key differences between Bayesian thinking with the frequentist approaches, the Bayes’ rule, and the thinking around making Bayesian inferences. Further, we explore real - world example of applying Bayesian statistics to a scientific problem.</p>
+</div>
+<div id="the-core-concept-bayesian-vs-frequentist" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> The Core Concept: Bayesian vs frequentist<a href="introduction-to-bayesian-thinking.html#the-core-concept-bayesian-vs-frequentist" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>The <strong>frequentist approach</strong> of statistics determines the how event occurs within a certain time period and then predict future events using this information. There is (are) population parameter(s) considered fixed but unknown, but characterized from data be observed from small portion of the population. For example, the probability of an event occurring can be estimated by taking the proportion of the number of times the event would occur to the number of trials. This proportion and other parameters of interest such as mean and variances are fixed and unknown, but needs to be estimated. Uncertainties around these parameter estimates are quantified using <span class="math inline">\(100(1-\alpha)\%\)</span> confidence intervals where <span class="math inline">\(\alpha\)</span> is commonly called significance level.</p>
+<p>In contrast, Bayesian thinking is based on the combination of the likelihood of the data and prior belief or evidence to get new insights or information about the events. At the heart of Bayesian thinking is <strong>Bayes’ theorem</strong>, a simple but profound principle that describes how to update our beliefs in response to new data.To define Bayes theorem formally, it is crucial to understand peculiar components to Bayesian statistics. The first component is the concept <strong>conditional probability</strong>. It is the probability of an event occurring (say Event <span class="math inline">\(A\)</span>) given that another event (say Event <span class="math inline">\(B\)</span>) has already occurred. It’s essentially the “probability of A happening given B has happened” represented as <span class="math inline">\(p(B/A)\)</span> and it is important for updating beliefs. The second component is the concept of <strong>Prior distributions</strong>. It represent the distribution of the parameter values based on personal belief, prior knowledge, experience, or assumptions before observing any new data. For example, to estimate the probability of a fair coin landing heads up, and no information is given other than this, the prior or assumption might be that the probability of heads up is 0.5. This prior is commonly called uniform prior. However, if there is a reason to believe that the coin might be biased towards heads, one can choose a prior that reflects that belief, like a beta distribution. The other key compnent in Bayesian statistics is the concept of <strong>Likelihood distribution</strong> (often just referred to as the likelihood) represents how likely it is to observe the data given a specific set of parameters in a statistical model. It is a distribution function that describes the liklihood contribution of the observed data under different parameter values. The last component is the concept of <strong>posterior distribution</strong> which combines prior distribution and the likelihood using Bayes’ rule. Thus, the Bayes theorem is mathematically expressed as:</p>
+<p><span class="math display">\[
+p(\theta | D) = \frac{p(D | \theta) p(\theta)}{p(D)},
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><p><span class="math inline">\(p(D | \theta)\)</span> describes the <strong>likelihood function</strong>, the probability of observing the data (D) given the parameter <span class="math inline">\(\theta\)</span></p></li>
+<li><p><span class="math inline">\(p(\theta)\)</span> is the <strong>prior distribution</strong> for the parameter <span class="math inline">\(\theta\)</span> describing the initial belief about the parameter before any data is observed.</p></li>
+<li><p><span class="math inline">\(p(D)\)</span> is the normalizing constant.</p></li>
+<li><p><span class="math inline">\(p(\theta | D)\)</span> is the <strong>posterior distribution</strong> of the parameter <span class="math inline">\(\theta\)</span> given the data. It represent the updated belief about a parameter <span class="math inline">\(\theta\)</span> after observing data $ D$.</p></li>
+</ul>
+<p>This equation encapsulates the Bayesian approach: starting with an initial belief (the prior), using evidence (the likelihood) to adjust that belief, and arriving at an updated belief (the posterior). The beauty of this process is that it allows the integration of both subjective prior knowledge and objective data, making it an ideal tool for reasoning under uncertainty.</p>
+<div id="motivating-examples" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Motivating Examples<a href="introduction-to-bayesian-thinking.html#motivating-examples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="basketball-shooting" class="section level4 hasAnchor" number="2.2.1.1">
+<h4><span class="header-section-number">2.2.1.1</span> Basketball shooting<a href="introduction-to-bayesian-thinking.html#basketball-shooting" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Let’s consider the example of shooting free throws in basketball. Suppose we define success as making the shot. Unlike a fair coin, we can’t assume a fixed probability for success, as it depends on the player’s skill, and other factors.</p>
+<p>Now, let’s observe a player taking n free throws and count how many they make, denoted as <span class="math inline">\(y\)</span>. Our goal is to estimate the player’s true free throw shooting percentage, <span class="math inline">\(\theta\)</span>.</p>
+<p>A natural first guess is to use the proportion <span class="math inline">\(y/n\)</span> as our estimate for <span class="math inline">\(\theta\)</span>. But suppose a player takes <span class="math inline">\(n = 4\)</span> free throws and misses all of them <span class="math inline">\((y = 0)\)</span>. Would it be reasonable to conclude that a player will never make a free throw <span class="math inline">\((\theta = 0/3 = 0)\)</span> in the future? Probably not.</p>
+<p>However, if the player shoots <span class="math inline">\(n = 100\)</span> free throws and still never makes a single one <span class="math inline">\((y = 0)\)</span>, then we might reasonably conclude that their chances of making a shot are extremely low, if not zero.</p>
+</div>
+<div id="covid-19-testing" class="section level4 hasAnchor" number="2.2.1.2">
+<h4><span class="header-section-number">2.2.1.2</span> Covid-19 testing<a href="introduction-to-bayesian-thinking.html#covid-19-testing" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Consider a more practical medical scenario: estimating the probability that a person tests positive for COVID-19. Suppose we define success as a positive test result. Unlike a fair coin, we don’t know the exact probability of testing positive for any given individual, as it depends on factors like recent exposure, symptoms, and the accuracy of the test.</p>
+<p>Now, let’s test <span class="math inline">\(n\)</span> individuals and count how many receive a positive result, denoted as <span class="math inline">\(y\)</span>. Our goal is to estimate the true probability <span class="math inline">\(\theta\)</span> of a positive test.</p>
+<p>Probably our first intuition is to use the proportion of positive test <span class="math inline">\(y/n\)</span> as an estimate for <span class="math inline">\(\theta\)</span>, the true population parameter. But suppose we test <span class="math inline">\(n = 5\)</span> individuals, and none of them test positive <span class="math inline">\((y = 0)\)</span>. Would it be reasonable to conclude that COVID-19 is not present in the population <span class="math inline">\((\theta = 0/5 = 0)\)</span> just based on this small sample? Clearly not.</p>
+<p>However, if we test <span class="math inline">\(n = 1000\)</span> individuals and still see zero positive cases <span class="math inline">\((y = 0)\)</span>, we might start to suspect that COVID-19 is no longer circulating in the population, or that the test is faulty.</p>
+<p>The two motivating examples illustrates why, in addition to estimating the most likely value of <span class="math inline">\(\theta\)</span>, we must also account for uncertainty in our estimates. The process of determining the most probable parameter values while quantifying uncertainty is known as statistical inference.</p>
+</div>
+<div id="pew-research-survey-science-knowledge" class="section level4 hasAnchor" number="2.2.1.3">
+<h4><span class="header-section-number">2.2.1.3</span> Pew research survey: Science knowledge<a href="introduction-to-bayesian-thinking.html#pew-research-survey-science-knowledge" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>A Pew research center conducted a survey of <a href="https://www.pewresearch.org/science/2019/03/28/what-americans-know-about-science/">What Americans Know About Science</a> with the question: “Based on what you have heard or read, which of the following two statements best describes the scientific method?” The response to this question was summarized in Table 1.1 by the educational level of the respondents.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-4">Table 2.1: </span>Science Knowledge by Education Level</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">HS</th>
+<th align="right">College</th>
+<th align="right">Bachelors</th>
+<th align="right">Postgrad</th>
+<th align="right">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Iterative</td>
+<td align="right">913</td>
+<td align="right">838</td>
+<td align="right">686</td>
+<td align="right">570</td>
+<td align="right">3007</td>
+</tr>
+<tr class="even">
+<td align="left">Unchanging</td>
+<td align="right">277</td>
+<td align="right">200</td>
+<td align="right">117</td>
+<td align="right">60</td>
+<td align="right">654</td>
+</tr>
+<tr class="odd">
+<td align="left">Not sure</td>
+<td align="right">408</td>
+<td align="right">213</td>
+<td align="right">81</td>
+<td align="right">40</td>
+<td align="right">742</td>
+</tr>
+<tr class="even">
+<td align="left">Total</td>
+<td align="right">1598</td>
+<td align="right">1251</td>
+<td align="right">884</td>
+<td align="right">670</td>
+<td align="right">4403</td>
+</tr>
+</tbody>
+</table>
+<ol style="list-style-type: decimal">
+<li><p>What percent of those with a postgraduate degree that the scientific method is “iterative”? How is this related to the values provided?</p></li>
+<li><p>Given that a person correctly answers a science question, what is the probability that they have a postgrad education level?</p></li>
+</ol>
+<p><strong>Solution</strong></p>
+<p>Create the data frame</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="introduction-to-bayesian-thinking.html#cb3-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-2"><a href="introduction-to-bayesian-thinking.html#cb3-2" tabindex="-1"></a>  <span class="at">Response =</span> <span class="fu">c</span>(<span class="st">&quot;Iterative&quot;</span>, <span class="st">&quot;Unchanging&quot;</span>, <span class="st">&quot;Not sure&quot;</span>, <span class="st">&quot;Total&quot;</span>),</span>
+<span id="cb3-3"><a href="introduction-to-bayesian-thinking.html#cb3-3" tabindex="-1"></a>  <span class="at">HS =</span> <span class="fu">c</span>(<span class="dv">913</span>, <span class="dv">277</span>, <span class="dv">408</span>, <span class="dv">1598</span>),</span>
+<span id="cb3-4"><a href="introduction-to-bayesian-thinking.html#cb3-4" tabindex="-1"></a>  <span class="at">college =</span> <span class="fu">c</span>(<span class="dv">838</span>, <span class="dv">200</span>, <span class="dv">213</span>, <span class="dv">1251</span>),</span>
+<span id="cb3-5"><a href="introduction-to-bayesian-thinking.html#cb3-5" tabindex="-1"></a>  <span class="at">Bachelors =</span> <span class="fu">c</span>(<span class="dv">686</span>, <span class="dv">117</span>, <span class="dv">81</span>, <span class="dv">884</span>),</span>
+<span id="cb3-6"><a href="introduction-to-bayesian-thinking.html#cb3-6" tabindex="-1"></a>  <span class="at">Postgrad =</span> <span class="fu">c</span>(<span class="dv">570</span>, <span class="dv">60</span>, <span class="dv">40</span>, <span class="dv">670</span>), </span>
+<span id="cb3-7"><a href="introduction-to-bayesian-thinking.html#cb3-7" tabindex="-1"></a>  <span class="at">Total =</span> <span class="fu">c</span>(<span class="dv">3007</span>, <span class="dv">654</span>, <span class="dv">742</span>, <span class="dv">4403</span>)</span>
+<span id="cb3-8"><a href="introduction-to-bayesian-thinking.html#cb3-8" tabindex="-1"></a>)</span>
+<span id="cb3-9"><a href="introduction-to-bayesian-thinking.html#cb3-9" tabindex="-1"></a><span class="fu">head</span>(data)</span></code></pre></div>
+<pre><code>##     Response   HS college Bachelors Postgrad Total
+## 1  Iterative  913     838       686      570  3007
+## 2 Unchanging  277     200       117       60   654
+## 3   Not sure  408     213        81       40   742
+## 4      Total 1598    1251       884      670  4403</code></pre>
+<ol style="list-style-type: decimal">
+<li>We want to calculate the percentage of individuals with a <strong>postgraduate degree</strong> who believe that the scientific method is “iterative”. The formula is:</li>
+</ol>
+<p><span class="math display">\[
+\text{Percentage} = \frac{\text{Number of Postgrad people who think scientific method is iterative}}{\text{Total number of Postgrad people}} \times 100
+\]</span>
+From the data:
+- The number of <strong>Postgrad</strong> individuals who think the scientific method is “iterative” is <strong>570</strong>.
+- The <strong>total number of Postgrad</strong> individuals is <strong>670</strong>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="introduction-to-bayesian-thinking.html#cb5-1" tabindex="-1"></a><span class="co"># Number of Postgrad individuals who think the scientific method is iterative</span></span>
+<span id="cb5-2"><a href="introduction-to-bayesian-thinking.html#cb5-2" tabindex="-1"></a>iterative_postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">1</span>]</span>
+<span id="cb5-3"><a href="introduction-to-bayesian-thinking.html#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="introduction-to-bayesian-thinking.html#cb5-4" tabindex="-1"></a><span class="co"># Total number of Postgrad individuals</span></span>
+<span id="cb5-5"><a href="introduction-to-bayesian-thinking.html#cb5-5" tabindex="-1"></a>total_postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">4</span>]</span>
+<span id="cb5-6"><a href="introduction-to-bayesian-thinking.html#cb5-6" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="introduction-to-bayesian-thinking.html#cb5-7" tabindex="-1"></a><span class="co"># Calculate the percentage</span></span>
+<span id="cb5-8"><a href="introduction-to-bayesian-thinking.html#cb5-8" tabindex="-1"></a>percentage_iterative_postgrad <span class="ot">&lt;-</span> (iterative_postgrad <span class="sc">/</span> total_postgrad) <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb5-9"><a href="introduction-to-bayesian-thinking.html#cb5-9" tabindex="-1"></a>percentage_iterative_postgrad</span></code></pre></div>
+<pre><code>## [1] 85.07463</code></pre>
+<p>The percentage of individuals with a postgraduate degree who think the scientific method is “iterative” is approximately 85.0%.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>We want to compute the probability that a person has a <strong>postgrad</strong> education, given that they correctly answered a science question. This can be modeled using <strong>Bayes’ Rule</strong>.</li>
+</ol>
+<p>The formula for Bayes’ Rule is:</p>
+<p><span class="math display">\[
+P(\text{Postgrad} | \text{Correct Answer}) = \frac{P(\text{Correct Answer} | \text{Postgrad}) P(\text{Postgrad})}{P(\text{Correct Answer})}
+\]</span></p>
+<p>Where:</p>
+<ul>
+<li><span class="math inline">\(P(\text{Postgrad})\)</span> = Prior probability of having a postgrad education</li>
+<li><span class="math inline">\(P(\text{Correct Answer} | \text{Postgrad})\)</span> = Probability of correctly answering a question given postgrad education</li>
+<li><span class="math inline">\(P(\text{Correct Answer})\)</span> = Total probability of correctly answering a question (across all education levels)</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="introduction-to-bayesian-thinking.html#cb7-1" tabindex="-1"></a><span class="co"># Calculate the probabilities</span></span>
+<span id="cb7-2"><a href="introduction-to-bayesian-thinking.html#cb7-2" tabindex="-1"></a>postgrad_total <span class="ot">&lt;-</span> <span class="fu">sum</span>(data<span class="sc">$</span>Postgrad[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb7-3"><a href="introduction-to-bayesian-thinking.html#cb7-3" tabindex="-1"></a>total_answers <span class="ot">&lt;-</span> <span class="fu">sum</span>(data<span class="sc">$</span>Total[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb7-4"><a href="introduction-to-bayesian-thinking.html#cb7-4" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="introduction-to-bayesian-thinking.html#cb7-5" tabindex="-1"></a><span class="co"># P(Postgrad) = probability of postgrad education</span></span>
+<span id="cb7-6"><a href="introduction-to-bayesian-thinking.html#cb7-6" tabindex="-1"></a>P_postgrad <span class="ot">&lt;-</span> postgrad_total <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb7-7"><a href="introduction-to-bayesian-thinking.html#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="introduction-to-bayesian-thinking.html#cb7-8" tabindex="-1"></a><span class="co"># P(Correct Answer | Postgrad) = probability of answering correctly given postgrad</span></span>
+<span id="cb7-9"><a href="introduction-to-bayesian-thinking.html#cb7-9" tabindex="-1"></a>P_correct_given_postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">1</span>] <span class="sc">/</span> data<span class="sc">$</span>Postgrad[<span class="dv">4</span>]</span>
+<span id="cb7-10"><a href="introduction-to-bayesian-thinking.html#cb7-10" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="introduction-to-bayesian-thinking.html#cb7-11" tabindex="-1"></a><span class="co"># P(Correct Answer) = total probability of answering correctly</span></span>
+<span id="cb7-12"><a href="introduction-to-bayesian-thinking.html#cb7-12" tabindex="-1"></a>P_correct <span class="ot">&lt;-</span> <span class="fu">sum</span>(data<span class="sc">$</span>Postgrad[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="sc">+</span> data<span class="sc">$</span>college[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="sc">+</span> data<span class="sc">$</span>Bachelors[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>] <span class="sc">+</span> data<span class="sc">$</span>HS[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]) <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb7-13"><a href="introduction-to-bayesian-thinking.html#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="introduction-to-bayesian-thinking.html#cb7-14" tabindex="-1"></a><span class="co"># Apply Bayes&#39; Rule</span></span>
+<span id="cb7-15"><a href="introduction-to-bayesian-thinking.html#cb7-15" tabindex="-1"></a>P_postgrad_given_correct <span class="ot">&lt;-</span> (P_correct_given_postgrad <span class="sc">*</span> P_postgrad) <span class="sc">/</span> P_correct</span>
+<span id="cb7-16"><a href="introduction-to-bayesian-thinking.html#cb7-16" tabindex="-1"></a>P_postgrad_given_correct</span></code></pre></div>
+<pre><code>## [1] 0.1294572</code></pre>
+</div>
+</div>
+<div id="likelihood-function" class="section level3 hasAnchor" number="2.2.2">
+<h3><span class="header-section-number">2.2.2</span> Likelihood function<a href="introduction-to-bayesian-thinking.html#likelihood-function" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The likelihood function quantifies the likelihood distribution of the observed data given the parameter. It describes the probability of observing the data given a particular set of parameters. It is denoted as <span class="math inline">\(p(y | \theta)\)</span>, where <span class="math inline">\(y\)</span> represents the observed data, and <span class="math inline">\(\theta\)</span> represents the parameters you’re estimating.</p>
+<p><strong>Example 1.1:</strong> If we are trying to model the relationship between a drug and patient recovery, the likelihood would capture the probability of observing the patients’ recovery outcomes given the dosage and treatment conditions.</p>
+<p><strong>Example 1.2:</strong> Suppose you conduct a survey where 8 out of 10 people express interest in a new product. You might model this as a Binomial distribution. The likelihood function would describe the probability of observing 8 successes (interest) out of 10 trials, given a probability <span class="math inline">\(\theta\)</span> of success.</p>
+<p><span class="math display">\[
+L(\theta | y) = \binom{10}{8} \theta^8 (1 - \theta)^2.
+\]</span>
+<strong>Example 1.3:</strong> Continuing the Basketball throwing example, if <span class="math inline">\(\theta\)</span> represent the probability of a successful free throws in <span class="math inline">\(n\)</span> consecutive throws. Assuming each shot is independent, the number of successful shots <span class="math inline">\(y\)</span> follows a Binomial distribution:
+<span class="math display">\[
+y|\theta \sim Bin(n, \theta)
+\]</span>
+with the likelihood function</p>
+<p><span class="math display">\[
+L(\theta |y, n) = \binom{n}{y} \theta^y (1 - \theta)^{n-y}.
+\]</span></p>
+<p>Given the structure of the data, <span class="math inline">\(p(y|\theta)\)</span> specifies parametric model for the data <span class="math inline">\((y)\)</span> given the parameter <span class="math inline">\(\theta\)</span>. The likelihood function is not a probability density function rather it specifies the uncertainty about <span class="math inline">\(\theta\)</span>.</p>
+<p><strong>Example 1.4:</strong> In a group of students, there are 7 out of 30 that are left-handed. Define the likelihood function</p>
+<p><em>Solution</em>
+- Let “y” denote the random variable representing the observed data that we are working with the problem. Here, the random variable is the number of left-handed students in the group.</p>
+<ul>
+<li><p>The number of students (n) would be 18, and the number of left-handed students would be 7.</p></li>
+<li><p>Let <span class="math inline">\(\theta\)</span> denote the proportion of left-handed students in the population. Here, <span class="math inline">\(\theta\)</span> is the true probability that any given student in the population is left-handed.</p></li>
+<li><p>Thus, the random variable <span class="math inline">\(y\)</span> as:</p></li>
+</ul>
+<p><span class="math display">\[
+y \sim Bin(n=30, \theta),\,\,
+\]</span>
+and the likelihood function of <span class="math inline">\(\theta\)</span> given the data <span class="math inline">\(y\)</span> is:
+<span class="math display">\[
+L(\theta|y) = \binom{n}{y} \theta^y (1 - \theta)^{n - y}.
+\]</span></p>
+<p><strong>Example 1.5:</strong> “What is the likelihood that a person has a postgraduate education given that they believe the scientific method is ‘iterative’?”</p>
+<p>We are interested in the probability that a person has a <strong>postgraduate degree</strong>, given that they believe the scientific method is <strong>iterative</strong>.</p>
+<p>We want to compute:</p>
+<p><span class="math display">\[
+P(\text{Postgrad} | \text{Iterative}) = \frac{P(\text{Iterative} | \text{Postgrad}) \cdot P(\text{Postgrad})}{P(\text{Iterative})}
+\]</span>
+Where:</p>
+<ul>
+<li><span class="math inline">\(P(\text{Iterative} | \text{Postgrad})\)</span> is the probability that a postgraduate individual believes the method is iterative.</li>
+<li><span class="math inline">\(P(\text{Postgrad})\)</span> is the prior probability of having a postgraduate education.</li>
+<li><span class="math inline">\(P(\text{Iterative})\)</span> is the probability that a person believes the method is iterative.</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="introduction-to-bayesian-thinking.html#cb9-1" tabindex="-1"></a><span class="co"># Calculate individual probabilities</span></span>
+<span id="cb9-2"><a href="introduction-to-bayesian-thinking.html#cb9-2" tabindex="-1"></a>P_iterative_given_postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">1</span>] <span class="sc">/</span> data<span class="sc">$</span>Postgrad[<span class="dv">4</span>]</span>
+<span id="cb9-3"><a href="introduction-to-bayesian-thinking.html#cb9-3" tabindex="-1"></a>P_postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">4</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb9-4"><a href="introduction-to-bayesian-thinking.html#cb9-4" tabindex="-1"></a>P_iterative <span class="ot">&lt;-</span> <span class="fu">sum</span>(data<span class="sc">$</span>Postgrad[<span class="dv">1</span>] <span class="sc">+</span> data<span class="sc">$</span>college[<span class="dv">1</span>] <span class="sc">+</span> data<span class="sc">$</span>Bachelors[<span class="dv">1</span>] <span class="sc">+</span> data<span class="sc">$</span>HS[<span class="dv">1</span>]) <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb9-5"><a href="introduction-to-bayesian-thinking.html#cb9-5" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="introduction-to-bayesian-thinking.html#cb9-6" tabindex="-1"></a><span class="co"># Calculate the likelihood</span></span>
+<span id="cb9-7"><a href="introduction-to-bayesian-thinking.html#cb9-7" tabindex="-1"></a>likelihood_postgrad_given_iterative <span class="ot">&lt;-</span> (P_iterative_given_postgrad <span class="sc">*</span> P_postgrad) <span class="sc">/</span> P_iterative</span>
+<span id="cb9-8"><a href="introduction-to-bayesian-thinking.html#cb9-8" tabindex="-1"></a>likelihood_postgrad_given_iterative</span></code></pre></div>
+<pre><code>## [1] 0.1895577</code></pre>
+<p>The likelihood that a person has a postgraduate education given that they believe the scientific method is iterative is approximately 0.19.</p>
+</div>
+<div id="prior-distributions-ptheta" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Prior distributions: <span class="math inline">\(p(\theta)\)</span><a href="introduction-to-bayesian-thinking.html#prior-distributions-ptheta" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The foundation for Bayesian thinking is specifying or identifying prior distribution for the parameter of interest before observing any data. It incorporate your beliefs, knowledge, assumptions, or expectations about the parameter of interest in the analysis. These assumption are subjective in nature because the degree of belief can vary from person to person. <strong>Subjective priors</strong> are often used when there is prior knowledge that is highly relevant to the analysis. However, this definition is highly subjective, and assumes that all priors are subjective priors. Not everyone concur with this idea as one desired to obtain results that are objectively valid. This can be achieved by specifying prior distribution that have minimal impact on the posterior distribution. Such distributions are called <strong>objective or noninformative priors</strong> (see the next section). The difference between objective and subjective priors is due to the nature of prior knowledge or degree of beliefs.</p>
+</div>
+<div id="posterior-distributions" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Posterior distributions<a href="introduction-to-bayesian-thinking.html#posterior-distributions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Once the prior and likelihood are combined, Bayes’ theorem yields the posterior distribution, <span class="math inline">\(p(\theta | y)\)</span>, which represents the updated belief about the hypothesis given the data. Mathematically, it is given by Bayes’ Theorem:</p>
+<p><span class="math display">\[
+p(\theta | y) = \frac{p(y | \theta) p(\theta)}{p(y)}
+\]</span></p>
+<p>Where <span class="math inline">\(p(\theta |y)\)</span>, <span class="math inline">\(p(y | \theta)\)</span>, and <span class="math inline">\(p(\theta)\)</span> are as defined above. <span class="math inline">\(p(\text{y})\)</span> is the marginal likelihood, also known as the evidence, which normalizes the result to ensure the posterior sums to 1 over all possible values of $ $, and it is constant, i.e., <span class="math inline">\(p(y) = \int_{\theta}p(y|\theta) p(\theta) d\theta\)</span>. Thus, the above equation can be expressed as
+<span class="math display">\[
+p(\theta|y) \propto p(y|\theta) \times p(\theta).
+\]</span>
+Equivalently in words, it can be expressed as
+<span class="math display">\[
+Posterior \propto Likelihood \times Prior.
+\]</span></p>
+<p>The posterior can be interpreted as a new probability distribution over all possible values of the parameter, reflecting both the prior knowledge and the evidence provided by the data.</p>
+<p><strong>Example 1.5:</strong> Calculate the posterior probabilities for each perception (iterative, unchanging, not sure) assuming the prior probabilities for the American adult’s perception of the scientific method.</p>
+<p><em>Solution:</em> We are tasked with calculating the posterior probabilities for different perceptions about the scientific method (iterative, unchanging, not sure), assuming prior probabilities for American adults’ perceptions are as follows:</p>
+<ul>
+<li><span class="math inline">\(P(\text{Iterative}) = 0.70\)</span></li>
+<li><span class="math inline">\(P(\text{Unchanging}) = 0.14\)</span></li>
+<li><span class="math inline">\(P(\text{Not Sure}) = 0.16\)</span></li>
+</ul>
+<p>We will calculate the posterior probability for each perception using Bayes’ Theorem. The formula is:
+<span class="math display">\[
+P(\text{Response} | \text{Education Level}) = \frac{P(\text{Education Level} | \text{Response}) \cdot P(\text{Response})}{P(\text{Education Level})}
+\]</span>
+Where:</p>
+<ul>
+<li><span class="math inline">\(P(\text{Response})\)</span> is the prior probability of the perception.</li>
+<li><span class="math inline">\(P(\text{Education Level} | \text{Response})\)</span> is the likelihood of an education level given the response.</li>
+<li><span class="math inline">\(P(\text{Education Level})\)</span> is the total probability of a particular education level across all responses.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="introduction-to-bayesian-thinking.html#cb11-1" tabindex="-1"></a>P_iterative <span class="ot">&lt;-</span> <span class="fl">0.70</span></span>
+<span id="cb11-2"><a href="introduction-to-bayesian-thinking.html#cb11-2" tabindex="-1"></a>P_unchanging <span class="ot">&lt;-</span> <span class="fl">0.14</span></span>
+<span id="cb11-3"><a href="introduction-to-bayesian-thinking.html#cb11-3" tabindex="-1"></a>P_notsure <span class="ot">&lt;-</span> <span class="fl">0.16</span></span>
+<span id="cb11-4"><a href="introduction-to-bayesian-thinking.html#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="introduction-to-bayesian-thinking.html#cb11-5" tabindex="-1"></a><span class="co"># Likelihoods</span></span>
+<span id="cb11-6"><a href="introduction-to-bayesian-thinking.html#cb11-6" tabindex="-1"></a>P_iterative_HS <span class="ot">&lt;-</span> data<span class="sc">$</span>HS[<span class="dv">1</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">1</span>]</span>
+<span id="cb11-7"><a href="introduction-to-bayesian-thinking.html#cb11-7" tabindex="-1"></a>P_iterative_college <span class="ot">&lt;-</span> data<span class="sc">$</span>college[<span class="dv">1</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">2</span>]</span>
+<span id="cb11-8"><a href="introduction-to-bayesian-thinking.html#cb11-8" tabindex="-1"></a>P_iterative_Bachelors <span class="ot">&lt;-</span> data<span class="sc">$</span>Bachelors[<span class="dv">1</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">3</span>]</span>
+<span id="cb11-9"><a href="introduction-to-bayesian-thinking.html#cb11-9" tabindex="-1"></a>P_iterative_Postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">1</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb11-10"><a href="introduction-to-bayesian-thinking.html#cb11-10" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="introduction-to-bayesian-thinking.html#cb11-11" tabindex="-1"></a>P_unchanging_HS <span class="ot">&lt;-</span> data<span class="sc">$</span>HS[<span class="dv">2</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">1</span>]</span>
+<span id="cb11-12"><a href="introduction-to-bayesian-thinking.html#cb11-12" tabindex="-1"></a>P_unchanging_college <span class="ot">&lt;-</span> data<span class="sc">$</span>college[<span class="dv">2</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">2</span>]</span>
+<span id="cb11-13"><a href="introduction-to-bayesian-thinking.html#cb11-13" tabindex="-1"></a>P_unchanging_Bachelors <span class="ot">&lt;-</span> data<span class="sc">$</span>Bachelors[<span class="dv">2</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">3</span>]</span>
+<span id="cb11-14"><a href="introduction-to-bayesian-thinking.html#cb11-14" tabindex="-1"></a>P_unchanging_Postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">2</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb11-15"><a href="introduction-to-bayesian-thinking.html#cb11-15" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="introduction-to-bayesian-thinking.html#cb11-16" tabindex="-1"></a>P_notsure_HS <span class="ot">&lt;-</span> data<span class="sc">$</span>HS[<span class="dv">3</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">1</span>]</span>
+<span id="cb11-17"><a href="introduction-to-bayesian-thinking.html#cb11-17" tabindex="-1"></a>P_notsure_college <span class="ot">&lt;-</span> data<span class="sc">$</span>college[<span class="dv">3</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">2</span>]</span>
+<span id="cb11-18"><a href="introduction-to-bayesian-thinking.html#cb11-18" tabindex="-1"></a>P_notsure_Bachelors <span class="ot">&lt;-</span> data<span class="sc">$</span>Bachelors[<span class="dv">3</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">3</span>]</span>
+<span id="cb11-19"><a href="introduction-to-bayesian-thinking.html#cb11-19" tabindex="-1"></a>P_notsure_Postgrad <span class="ot">&lt;-</span> data<span class="sc">$</span>Postgrad[<span class="dv">3</span>] <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb11-20"><a href="introduction-to-bayesian-thinking.html#cb11-20" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="introduction-to-bayesian-thinking.html#cb11-21" tabindex="-1"></a><span class="co"># Total probabilities for education levels</span></span>
+<span id="cb11-22"><a href="introduction-to-bayesian-thinking.html#cb11-22" tabindex="-1"></a>P_HS <span class="ot">&lt;-</span> (<span class="dv">913</span> <span class="sc">+</span> <span class="dv">277</span> <span class="sc">+</span> <span class="dv">408</span>) <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb11-23"><a href="introduction-to-bayesian-thinking.html#cb11-23" tabindex="-1"></a>P_college <span class="ot">&lt;-</span> (<span class="dv">838</span> <span class="sc">+</span> <span class="dv">200</span> <span class="sc">+</span> <span class="dv">213</span>) <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb11-24"><a href="introduction-to-bayesian-thinking.html#cb11-24" tabindex="-1"></a>P_Bachelors <span class="ot">&lt;-</span> (<span class="dv">686</span> <span class="sc">+</span> <span class="dv">117</span> <span class="sc">+</span> <span class="dv">81</span>) <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb11-25"><a href="introduction-to-bayesian-thinking.html#cb11-25" tabindex="-1"></a>P_Postgrad <span class="ot">&lt;-</span> (<span class="dv">570</span> <span class="sc">+</span> <span class="dv">60</span> <span class="sc">+</span> <span class="dv">40</span>) <span class="sc">/</span> data<span class="sc">$</span>Total[<span class="dv">4</span>]</span>
+<span id="cb11-26"><a href="introduction-to-bayesian-thinking.html#cb11-26" tabindex="-1"></a></span>
+<span id="cb11-27"><a href="introduction-to-bayesian-thinking.html#cb11-27" tabindex="-1"></a><span class="co"># Posterior Probabilities using Bayes&#39; Theorem</span></span>
+<span id="cb11-28"><a href="introduction-to-bayesian-thinking.html#cb11-28" tabindex="-1"></a>P_iterative_post <span class="ot">&lt;-</span> (P_iterative_Postgrad <span class="sc">*</span> P_iterative) <span class="sc">/</span> P_Postgrad</span>
+<span id="cb11-29"><a href="introduction-to-bayesian-thinking.html#cb11-29" tabindex="-1"></a>P_unchanging_post <span class="ot">&lt;-</span> (P_unchanging_Postgrad <span class="sc">*</span> P_unchanging) <span class="sc">/</span> P_Postgrad</span>
+<span id="cb11-30"><a href="introduction-to-bayesian-thinking.html#cb11-30" tabindex="-1"></a>P_notsure_post <span class="ot">&lt;-</span> (P_notsure_Postgrad <span class="sc">*</span> P_notsure) <span class="sc">/</span> P_Postgrad</span>
+<span id="cb11-31"><a href="introduction-to-bayesian-thinking.html#cb11-31" tabindex="-1"></a></span>
+<span id="cb11-32"><a href="introduction-to-bayesian-thinking.html#cb11-32" tabindex="-1"></a><span class="co"># Result in a table</span></span>
+<span id="cb11-33"><a href="introduction-to-bayesian-thinking.html#cb11-33" tabindex="-1"></a>result_table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb11-34"><a href="introduction-to-bayesian-thinking.html#cb11-34" tabindex="-1"></a>  <span class="st">&quot;Education Level&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;HS&quot;</span>, <span class="st">&quot;College&quot;</span>, <span class="st">&quot;Bachelors&quot;</span>, <span class="st">&quot;Postgrad&quot;</span>),</span>
+<span id="cb11-35"><a href="introduction-to-bayesian-thinking.html#cb11-35" tabindex="-1"></a>  <span class="st">&quot;Iterative Posterior&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(P_iterative_HS, P_iterative_college, P_iterative_Bachelors, P_iterative_Postgrad),</span>
+<span id="cb11-36"><a href="introduction-to-bayesian-thinking.html#cb11-36" tabindex="-1"></a>  <span class="st">&quot;Unchanging Posterior&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(P_unchanging_HS, P_unchanging_college, P_unchanging_Bachelors, P_unchanging_Postgrad),</span>
+<span id="cb11-37"><a href="introduction-to-bayesian-thinking.html#cb11-37" tabindex="-1"></a>  <span class="st">&quot;Not Sure Posterior&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(P_notsure_HS, P_notsure_college, P_notsure_Bachelors, P_notsure_Postgrad)</span>
+<span id="cb11-38"><a href="introduction-to-bayesian-thinking.html#cb11-38" tabindex="-1"></a>)</span>
+<span id="cb11-39"><a href="introduction-to-bayesian-thinking.html#cb11-39" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="introduction-to-bayesian-thinking.html#cb11-40" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(result_table, <span class="at">caption =</span> <span class="st">&quot;Posterior Probabilities for Scientific Responses by Education Level&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-9">Table 2.2: </span>Posterior Probabilities for Scientific Responses by Education Level</caption>
+<colgroup>
+<col width="21%" />
+<col width="26%" />
+<col width="27%" />
+<col width="25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Education.Level</th>
+<th align="right">Iterative.Posterior</th>
+<th align="right">Unchanging.Posterior</th>
+<th align="right">Not.Sure.Posterior</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HS</td>
+<td align="right">0.3036249</td>
+<td align="right">0.0921184</td>
+<td align="right">0.1356834</td>
+</tr>
+<tr class="even">
+<td align="left">College</td>
+<td align="right">1.2813456</td>
+<td align="right">0.3058104</td>
+<td align="right">0.3256881</td>
+</tr>
+<tr class="odd">
+<td align="left">Bachelors</td>
+<td align="right">0.9245283</td>
+<td align="right">0.1576819</td>
+<td align="right">0.1091644</td>
+</tr>
+<tr class="even">
+<td align="left">Postgrad</td>
+<td align="right">0.1294572</td>
+<td align="right">0.0136271</td>
+<td align="right">0.0090847</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="applications-of-bayesian-thinking" class="section level2 hasAnchor" number="2.3">
+<h2><span class="header-section-number">2.3</span> Applications of Bayesian Thinking<a href="introduction-to-bayesian-thinking.html#applications-of-bayesian-thinking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bayesian thinking has become the cornerstone statistical analysis method across various fields, from health science and finance to artificial intelligence and machine learning. Some of the most notable areas where Bayesian methods are routinely applied include:</p>
+<ul>
+<li><strong>Health Sciences</strong>: In clinical trials or diagnosis, Bayesian analysis help update the probability of a disease given new test results, facilitating better decision-making (e.g., Spiegler et al., 2015).</li>
+<li><strong>Machine Learning</strong>: In machine learning, Bayesian models are used for tasks such as classification, regression, and parameter estimation. Techniques like <strong>Bayesian neural networks</strong> integrate uncertainty into predictions, providing more robust models.</li>
+<li><strong>Economics and Finance</strong>: Economists use Bayesian methods for modeling market behaviors and forecasting economic trends, with a focus on how beliefs evolve in response to new data (e.g., Berger, 1985).</li>
+<li><strong>Robotics and Control Systems</strong>: Bayesian methods are integral in robot navigation, where robots continually update their belief about the environment based on sensor data (Thrun et al., 2005).</li>
+</ul>
+<p>Bayesian methods are also invaluable for <strong>decision theory</strong>. For instance, in situations involving risk and uncertainty, such as investment decisions or insurance underwriting, Bayes’ theorem can help quantify and incorporate uncertainty, leading to more informed choices.</p>
+</div>
+<div id="challenges" class="section level2 hasAnchor" number="2.4">
+<h2><span class="header-section-number">2.4</span> Challenges<a href="introduction-to-bayesian-thinking.html#challenges" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Despite its many advantages, Bayesian thinking is not without its challenges. One common criticism is the subjectivity inherent in choosing priors. Critics argue that subjective priors can lead to biased conclusions, particularly if they are poorly chosen or overly informative. However, Bayesian methods include techniques like <strong>robustness analysis</strong> and <strong>sensitivity analysis</strong> to assess the influence of priors on the final outcome.</p>
+<p>Another challenge lies in the computational complexity of calculating the posterior. While modern algorithms such as Markov Chain Monte Carlo (MCMC) and variational inference have greatly improved the feasibility of Bayesian analysis, these methods can still be resource-intensive, especially for large datasets or highly complex models.</p>
+</div>
+<div id="references" class="section level2 unnumbered hasAnchor">
+<h2>References<a href="introduction-to-bayesian-thinking.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li><p>Berger, J. O. (1985). <em>Statistical Decision Theory and Bayesian Analysis</em> (2nd ed.). Springer-Verlag.</p></li>
+<li><p>Spiegler, T., et al. (2015). “Bayesian Decision Making in Clinical Medicine.” <em>Journal of Clinical Epidemiology</em>, 68(5), 621-632.</p></li>
+<li><p>McElreath, R. (2016). Statistical Rethinking: A Bayesian Course with Examples in R and Stan (1st ed.). Chapman and Hall/CRC. <a href="https://doi.org/10.1201/9781315372495" class="uri">https://doi.org/10.1201/9781315372495</a></p></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="parameters-priors-and-posteriors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/USERNAME/REPO/edit/BRANCH/01-intro.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

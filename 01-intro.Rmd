@@ -1,0 +1,338 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+# Introduction to Bayesian Thinking 
+
+
+## Introduction
+During the past thirty years, statistical analysis using Bayesian technique has evolved enormously and has become the powerful statistical methodology for making decision from data. It is not just a family of techniques but brings a new way of thinking to statistics, it provides a powerful framework for reasoning about uncertainty, making decisions, and updating beliefs in the face of new evidence. Bayesian thinking has become a cornerstone of modern statistics, engineering, medicine, social sciences, and data sciences, and underpins much of the developing fields of machine learning and artificial intelligence (AI). In simple terms, it's an approach that enables you to adjust your critical thinking in reactively to new evidence. Critical thinking is an active and continuous process that requires an approach like Bayesians, constantly refining and updating our knowledge as new information emerges.
+
+In this chapter, we explore key differences between Bayesian thinking with the frequentist approaches, the Bayes’ rule, and the thinking around making Bayesian inferences. Further, we explore real - world example of applying Bayesian statistics to a scientific problem.
+
+
+## The Core Concept: Bayesian vs frequentist
+
+The **frequentist approach** of statistics determines the how event occurs within a certain time period and then predict future events using this information. There is (are) population parameter(s) considered fixed but unknown, but characterized from data be observed from small portion of the population. For example, the probability of an event occurring can be estimated by taking the proportion of the number of times the event would occur to the number of trials. This proportion and other parameters of interest such as mean and variances are fixed and unknown, but needs to be estimated. Uncertainties around these parameter estimates are quantified using $100(1-\alpha)\%$ confidence intervals where $\alpha$ is commonly called significance level. 
+
+In contrast, Bayesian thinking is based on the combination of the likelihood of the data and prior belief or evidence to get new insights or information about the events. At the heart of Bayesian thinking is **Bayes’ theorem**, a simple but profound principle that describes how to update our beliefs in response to new data.To define Bayes theorem formally, it is crucial to understand peculiar components to Bayesian statistics. The first component is the concept **conditional probability**. It is the probability of an event occurring (say Event $A$) given that another event (say Event $B$) has already occurred. It’s essentially the "probability of A happening given B has happened" represented as $p(B/A)$ and it is important for updating beliefs. The second component is the concept of **Prior distributions**. It represent the distribution of the parameter values based on personal belief, prior knowledge, experience, or assumptions before observing any new data. For example, to estimate the probability of a fair coin landing heads up, and no information is given other than this, the prior or assumption might be that the probability of heads up is 0.5. This prior is commonly called uniform prior. However, if there is a reason to believe that the coin might be biased towards heads, one can choose a prior that reflects that belief, like a beta distribution. The other key compnent in Bayesian statistics is the concept of **Likelihood distribution** (often just referred to as the likelihood) represents how likely it is to observe the data given a specific set of parameters in a statistical model. It is a distribution function that describes the liklihood contribution of the observed data under different parameter values. The last component is the concept of **posterior distribution** which combines prior distribution and the likelihood using Bayes’ rule. Thus, the Bayes theorem is mathematically expressed as:
+
+$$
+p(\theta | D) = \frac{p(D | \theta) p(\theta)}{p(D)},
+$$
+
+Where:
+
+- $p(D | \theta)$ describes the **likelihood function**, the probability of observing the data (D) given the parameter $\theta$
+
+- $p(\theta)$ is the **prior distribution** for the parameter $\theta$ describing the initial belief about the parameter before any data is observed.
+
+- $p(D)$ is the normalizing constant.
+
+- $p(\theta | D)$ is the **posterior distribution** of the parameter $\theta$ given the data. It represent the updated belief about a parameter $\theta$ after observing data $ D$.
+
+This equation encapsulates the Bayesian approach: starting with an initial belief (the prior), using evidence (the likelihood) to adjust that belief, and arriving at an updated belief (the posterior). The beauty of this process is that it allows the integration of both subjective prior knowledge and objective data, making it an ideal tool for reasoning under uncertainty.
+
+### Motivating Examples 
+
+#### Basketball shooting
+
+Let’s consider the example of shooting free throws in basketball. Suppose we define success as making the shot. Unlike a fair coin, we can’t assume a fixed probability for success, as it depends on the player's skill, and other factors.
+
+Now, let’s observe a player taking n free throws and count how many they make, denoted as $y$. Our goal is to estimate the player's true free throw shooting percentage, $\theta$.
+
+A natural first guess is to use the proportion $y/n$ as our estimate for $\theta$. But suppose a player takes $n = 4$ free throws and misses all of them $(y = 0)$. Would it be reasonable to conclude that a player will never make a free throw $(\theta = 0/3 = 0)$ in the future? Probably not.
+
+However, if the player shoots $n = 100$ free throws and still never makes a single one $(y = 0)$, then we might reasonably conclude that their chances of making a shot are extremely low, if not zero.
+
+#### Covid-19 testing
+
+Consider a more practical medical scenario: estimating the probability that a person tests positive for COVID-19. Suppose we define success as a positive test result. Unlike a fair coin, we don’t know the exact probability of testing positive for any given individual, as it depends on factors like recent exposure, symptoms, and the accuracy of the test.
+
+Now, let's test $n$ individuals and count how many receive a positive result, denoted as $y$. Our goal is to estimate the true probability $\theta$ of a positive test.
+
+Probably our first intuition is to use the proportion of positive test $y/n$ as an estimate for $\theta$, the true population parameter. But suppose we test $n = 5$ individuals, and none of them test positive $(y = 0)$. Would it be reasonable to conclude that COVID-19 is not present in the population $(\theta = 0/5 = 0)$ just based on this small sample? Clearly not.
+
+However, if we test $n = 1000$ individuals and still see zero positive cases $(y = 0)$, we might start to suspect that COVID-19 is no longer circulating in the population, or that the test is faulty.
+
+The two motivating examples illustrates why, in addition to estimating the most likely value of $\theta$, we must also account for uncertainty in our estimates. The process of determining the most probable parameter values while quantifying uncertainty is known as statistical inference.
+
+#### Pew research survey: Science knowledge
+A Pew research center conducted a survey of [What Americans Know About Science](https://www.pewresearch.org/science/2019/03/28/what-americans-know-about-science/) with the question: "Based on what you have heard or read, which of the following two statements best describes the scientific method?" The response to this question was summarized in Table 1.1 by the educational level of the respondents. 
+
+```{r, echo=FALSE}
+library(knitr)
+
+# Create the data frame
+data <- data.frame(
+  Response = c("Iterative", "Unchanging", "Not sure", "Total"),
+  HS = c(913, 277, 408, 1598),
+  college = c(838, 200, 213, 1251),
+  Bachelors = c(686, 117, 81, 884),
+  Postgrad = c(570, 60, 40, 670), 
+  Total = c(3007, 654, 742, 4403) 
+)
+
+# Print table
+kable(data, col.names = c(" ", "HS", "College", "Bachelors", "Postgrad", "Total"), caption = "Science Knowledge by Education Level")
+
+```
+
+1. What percent of those with a postgraduate degree that the scientific method is "iterative"? How is this related to the values provided?
+
+2. Given that a person correctly answers a science question, what is the probability that they have a postgrad education level?
+
+**Solution**
+
+Create the data frame
+```{r}
+data <- data.frame(
+  Response = c("Iterative", "Unchanging", "Not sure", "Total"),
+  HS = c(913, 277, 408, 1598),
+  college = c(838, 200, 213, 1251),
+  Bachelors = c(686, 117, 81, 884),
+  Postgrad = c(570, 60, 40, 670), 
+  Total = c(3007, 654, 742, 4403)
+)
+head(data)
+```
+
+1. We want to calculate the percentage of individuals with a **postgraduate degree** who believe that the scientific method is "iterative". The formula is:
+
+$$
+\text{Percentage} = \frac{\text{Number of Postgrad people who think scientific method is iterative}}{\text{Total number of Postgrad people}} \times 100
+$$
+From the data:
+- The number of **Postgrad** individuals who think the scientific method is "iterative" is **570**.
+- The **total number of Postgrad** individuals is **670**.
+
+```{r}
+# Number of Postgrad individuals who think the scientific method is iterative
+iterative_postgrad <- data$Postgrad[1]
+
+# Total number of Postgrad individuals
+total_postgrad <- data$Postgrad[4]
+
+# Calculate the percentage
+percentage_iterative_postgrad <- (iterative_postgrad / total_postgrad) * 100
+percentage_iterative_postgrad
+```
+The percentage of individuals with a postgraduate degree who think the scientific method is "iterative" is approximately 85.0%.
+
+2. We want to compute the probability that a person has a **postgrad** education, given that they correctly answered a science question. This can be modeled using **Bayes' Rule**.
+
+The formula for Bayes' Rule is:
+
+$$
+P(\text{Postgrad} | \text{Correct Answer}) = \frac{P(\text{Correct Answer} | \text{Postgrad}) P(\text{Postgrad})}{P(\text{Correct Answer})}
+$$
+
+Where:
+
+- $P(\text{Postgrad})$ = Prior probability of having a postgrad education
+- $P(\text{Correct Answer} | \text{Postgrad})$ = Probability of correctly answering a question given postgrad education
+- $P(\text{Correct Answer})$ = Total probability of correctly answering a question (across all education levels)
+
+```{r}
+# Calculate the probabilities
+postgrad_total <- sum(data$Postgrad[1:3])
+total_answers <- sum(data$Total[1:3])
+
+# P(Postgrad) = probability of postgrad education
+P_postgrad <- postgrad_total / data$Total[4]
+
+# P(Correct Answer | Postgrad) = probability of answering correctly given postgrad
+P_correct_given_postgrad <- data$Postgrad[1] / data$Postgrad[4]
+
+# P(Correct Answer) = total probability of answering correctly
+P_correct <- sum(data$Postgrad[1:3] + data$college[1:3] + data$Bachelors[1:3] + data$HS[1:3]) / data$Total[4]
+
+# Apply Bayes' Rule
+P_postgrad_given_correct <- (P_correct_given_postgrad * P_postgrad) / P_correct
+P_postgrad_given_correct
+
+```
+
+
+###   Likelihood function
+
+The likelihood function quantifies the likelihood distribution of the observed data given the parameter. It describes the probability of observing the data given a particular set of parameters. It is denoted as $p(y | \theta)$, where $y$ represents the observed data, and $\theta$ represents the parameters you're estimating. 
+
+**Example 1.1:** If we are trying to model the relationship between a drug and patient recovery, the likelihood would capture the probability of observing the patients' recovery outcomes given the dosage and treatment conditions.
+
+**Example 1.2:** Suppose you conduct a survey where 8 out of 10 people express interest in a new product. You might model this as a Binomial distribution. The likelihood function would describe the probability of observing 8 successes (interest) out of 10 trials, given a probability $\theta$ of success.
+
+$$
+L(\theta | y) = \binom{10}{8} \theta^8 (1 - \theta)^2.
+$$
+**Example 1.3:** Continuing the Basketball throwing example, if $\theta$ represent the probability of a successful free throws in $n$ consecutive throws. Assuming each shot is independent, the number of successful shots $y$ follows a Binomial distribution:
+$$
+y|\theta \sim Bin(n, \theta)
+$$
+with the likelihood function
+
+$$
+L(\theta |y, n) = \binom{n}{y} \theta^y (1 - \theta)^{n-y}.
+$$
+
+Given the structure of the data, $p(y|\theta)$ specifies parametric model for the data $(y)$ given the parameter $\theta$. The likelihood function is not a probability density function rather it specifies the uncertainty about $\theta$. 
+
+**Example 1.4:** In a group of students, there are 7 out of 30 that are left-handed. Define the likelihood function
+
+*Solution*
+- Let "y" denote the random variable representing the observed data that we are working with the problem. Here, the random variable is the number of left-handed students in the group. 
+
+- The number of students (n) would be 18, and the number of left-handed students would be 7. 
+
+- Let $\theta$ denote the proportion of left-handed students in the population. Here, $\theta$ is the true probability that any given student in the population is left-handed. 
+- Thus, the random variable $y$ as:
+
+$$
+y \sim Bin(n=30, \theta),\,\, 
+$$
+and the likelihood function of $\theta$ given the data $y$ is:
+$$
+L(\theta|y) = \binom{n}{y} \theta^y (1 - \theta)^{n - y}. 
+$$
+
+**Example 1.5:** "What is the likelihood that a person has a postgraduate education given that they believe the scientific method is 'iterative'?" 
+
+We are interested in the probability that a person has a **postgraduate degree**, given that they believe the scientific method is **iterative**.
+
+We want to compute:
+
+$$
+P(\text{Postgrad} | \text{Iterative}) = \frac{P(\text{Iterative} | \text{Postgrad}) \cdot P(\text{Postgrad})}{P(\text{Iterative})}
+$$
+Where:
+
+- $P(\text{Iterative} | \text{Postgrad})$ is the probability that a postgraduate individual believes the method is iterative.
+- $P(\text{Postgrad})$ is the prior probability of having a postgraduate education.
+- $P(\text{Iterative})$ is the probability that a person believes the method is iterative.
+
+```{r}
+# Calculate individual probabilities
+P_iterative_given_postgrad <- data$Postgrad[1] / data$Postgrad[4]
+P_postgrad <- data$Postgrad[4] / data$Total[4]
+P_iterative <- sum(data$Postgrad[1] + data$college[1] + data$Bachelors[1] + data$HS[1]) / data$Total[4]
+
+# Calculate the likelihood
+likelihood_postgrad_given_iterative <- (P_iterative_given_postgrad * P_postgrad) / P_iterative
+likelihood_postgrad_given_iterative
+
+```
+The likelihood that a person has a postgraduate education given that they believe the scientific method is iterative is approximately 0.19. 
+
+
+###  Prior distributions: $p(\theta)$
+The foundation for Bayesian thinking is specifying or identifying prior distribution for the parameter of interest before observing any data. It incorporate your beliefs, knowledge, assumptions, or expectations about the parameter of interest in the analysis. These assumption are subjective in nature because the degree of belief can vary from person to person. **Subjective priors** are often used when there is prior knowledge that is highly relevant to the analysis. However, this definition is highly subjective, and assumes that all priors are subjective priors. Not everyone concur with this idea as one desired to obtain results that are objectively valid. This can be achieved by specifying prior distribution that have minimal impact on the posterior distribution. Such distributions are called **objective or noninformative priors** (see the next section). The difference between objective and subjective priors is due to the nature of prior knowledge or degree of beliefs.
+
+### Posterior distributions
+
+Once the prior and likelihood are combined, Bayes' theorem yields the posterior distribution, \( p(\theta | y) \), which represents the updated belief about the hypothesis given the data. Mathematically, it is given by Bayes' Theorem:
+
+$$
+p(\theta | y) = \frac{p(y | \theta) p(\theta)}{p(y)}
+$$
+
+Where  $p(\theta |y)$,  $p(y | \theta)$,  and $p(\theta)$  are as defined above. $p(\text{y})$ is the marginal likelihood, also known as the evidence, which normalizes the result to ensure the posterior sums to 1 over all possible values of $ \theta $, and it is constant, i.e., $p(y) = \int_{\theta}p(y|\theta) p(\theta) d\theta$. Thus, the above equation can be expressed as
+$$
+p(\theta|y) \propto p(y|\theta) \times p(\theta). 
+$$
+Equivalently in words, it can be expressed as 
+$$
+Posterior \propto Likelihood \times Prior. 
+$$
+
+The posterior can be interpreted as a new probability distribution over all possible values of the parameter, reflecting both the prior knowledge and the evidence provided by the data.
+
+
+**Example 1.5:** Calculate the posterior probabilities for each perception (iterative, unchanging, not sure) assuming the prior probabilities for the American adult's perception of the scientific method.
+
+*Solution:* We are tasked with calculating the posterior probabilities for different perceptions about the scientific method (iterative, unchanging, not sure), assuming prior probabilities for American adults' perceptions are as follows:
+
+- $P(\text{Iterative}) = 0.70$
+- $P(\text{Unchanging}) = 0.14$
+- $P(\text{Not Sure}) = 0.16$
+
+We will calculate the posterior probability for each perception using Bayes' Theorem. The formula is:
+$$
+P(\text{Response} | \text{Education Level}) = \frac{P(\text{Education Level} | \text{Response}) \cdot P(\text{Response})}{P(\text{Education Level})}
+$$
+Where:
+
+- $P(\text{Response})$ is the prior probability of the perception.
+- $P(\text{Education Level} | \text{Response})$ is the likelihood of an education level given the response.
+- $P(\text{Education Level})$ is the total probability of a particular education level across all responses.
+
+```{r}
+P_iterative <- 0.70
+P_unchanging <- 0.14
+P_notsure <- 0.16
+
+# Likelihoods
+P_iterative_HS <- data$HS[1] / data$Total[1]
+P_iterative_college <- data$college[1] / data$Total[2]
+P_iterative_Bachelors <- data$Bachelors[1] / data$Total[3]
+P_iterative_Postgrad <- data$Postgrad[1] / data$Total[4]
+
+P_unchanging_HS <- data$HS[2] / data$Total[1]
+P_unchanging_college <- data$college[2] / data$Total[2]
+P_unchanging_Bachelors <- data$Bachelors[2] / data$Total[3]
+P_unchanging_Postgrad <- data$Postgrad[2] / data$Total[4]
+
+P_notsure_HS <- data$HS[3] / data$Total[1]
+P_notsure_college <- data$college[3] / data$Total[2]
+P_notsure_Bachelors <- data$Bachelors[3] / data$Total[3]
+P_notsure_Postgrad <- data$Postgrad[3] / data$Total[4]
+
+# Total probabilities for education levels
+P_HS <- (913 + 277 + 408) / data$Total[4]
+P_college <- (838 + 200 + 213) / data$Total[4]
+P_Bachelors <- (686 + 117 + 81) / data$Total[4]
+P_Postgrad <- (570 + 60 + 40) / data$Total[4]
+
+# Posterior Probabilities using Bayes' Theorem
+P_iterative_post <- (P_iterative_Postgrad * P_iterative) / P_Postgrad
+P_unchanging_post <- (P_unchanging_Postgrad * P_unchanging) / P_Postgrad
+P_notsure_post <- (P_notsure_Postgrad * P_notsure) / P_Postgrad
+
+# Result in a table
+result_table <- data.frame(
+  "Education Level" = c("HS", "College", "Bachelors", "Postgrad"),
+  "Iterative Posterior" = c(P_iterative_HS, P_iterative_college, P_iterative_Bachelors, P_iterative_Postgrad),
+  "Unchanging Posterior" = c(P_unchanging_HS, P_unchanging_college, P_unchanging_Bachelors, P_unchanging_Postgrad),
+  "Not Sure Posterior" = c(P_notsure_HS, P_notsure_college, P_notsure_Bachelors, P_notsure_Postgrad)
+)
+
+knitr::kable(result_table, caption = "Posterior Probabilities for Scientific Responses by Education Level")
+
+```
+
+
+
+## Applications of Bayesian Thinking
+
+Bayesian thinking has become the cornerstone statistical analysis method across various fields, from health science and finance to artificial intelligence and machine learning. Some of the most notable areas where Bayesian methods are routinely applied include:
+
+- **Health Sciences**: In clinical trials or diagnosis, Bayesian analysis help update the probability of a disease given new test results, facilitating better decision-making (e.g., Spiegler et al., 2015).
+- **Machine Learning**: In machine learning, Bayesian models are used for tasks such as classification, regression, and parameter estimation. Techniques like **Bayesian neural networks** integrate uncertainty into predictions, providing more robust models.
+- **Economics and Finance**: Economists use Bayesian methods for modeling market behaviors and forecasting economic trends, with a focus on how beliefs evolve in response to new data (e.g., Berger, 1985).
+- **Robotics and Control Systems**: Bayesian methods are integral in robot navigation, where robots continually update their belief about the environment based on sensor data (Thrun et al., 2005).
+
+Bayesian methods are also invaluable for **decision theory**. For instance, in situations involving risk and uncertainty, such as investment decisions or insurance underwriting, Bayes’ theorem can help quantify and incorporate uncertainty, leading to more informed choices.
+
+## Challenges
+
+Despite its many advantages, Bayesian thinking is not without its challenges. One common criticism is the subjectivity inherent in choosing priors. Critics argue that subjective priors can lead to biased conclusions, particularly if they are poorly chosen or overly informative. However, Bayesian methods include techniques like **robustness analysis** and **sensitivity analysis** to assess the influence of priors on the final outcome.
+
+Another challenge lies in the computational complexity of calculating the posterior. While modern algorithms such as  Markov Chain Monte Carlo (MCMC) and variational inference have greatly improved the feasibility of Bayesian analysis, these methods can still be resource-intensive, especially for large datasets or highly complex models.
+
+## References {-}
+
+- Berger, J. O. (1985). *Statistical Decision Theory and Bayesian Analysis* (2nd ed.). Springer-Verlag.
+- Spiegler, T., et al. (2015). "Bayesian Decision Making in Clinical Medicine." *Journal of Clinical Epidemiology*, 68(5), 621-632.
+
+- McElreath, R. (2016). Statistical Rethinking: A Bayesian Course with Examples in R and Stan (1st ed.). Chapman and Hall/CRC. https://doi.org/10.1201/9781315372495
+
